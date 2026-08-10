@@ -1,0 +1,187 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="How It Works — FastLicense" description="Three steps to getting licensed fast. No learning curve, no portal, no back-and-forth.">
+  <section class="page-hero">
+    <div class="container">
+      <h1>How It Works</h1>
+      <p>Three steps. One specialist. Zero confusion.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width: 760px;">
+
+      <div class="process-step">
+        <div class="process-num">1</div>
+        <div class="process-content">
+          <h2>Tell Us What You Need</h2>
+          <p>Use our <a href="/#quiz">timeline estimator</a> or <a href="/contact">contact us directly</a>. We need three pieces of information:</p>
+          <ul>
+            <li><strong>License type</strong> — what kind of business you're operating</li>
+            <li><strong>State(s)</strong> — where you need to be licensed</li>
+            <li><strong>Timeline</strong> — how quickly you need it</li>
+          </ul>
+          <p>That's it. We respond within 1 business day with your exact timeline, cost, and required documents.</p>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-num">2</div>
+        <div class="process-content">
+          <h2>We Prepare and File</h2>
+          <p>Your dedicated licensing specialist handles everything:</p>
+          <ul>
+            <li><strong>Application preparation</strong> — every form filled out correctly the first time</li>
+            <li><strong>Document assembly</strong> — we tell you exactly what's needed, then compile and organize it</li>
+            <li><strong>Regulatory filing</strong> — submitted to the correct agency with correct fees</li>
+            <li><strong>Surety bond procurement</strong> — if your license requires a bond, we handle that too</li>
+          </ul>
+          <p>Average filing preparation time: <strong>3 business days</strong> from receiving your information. Our 97% first-submission approval rate means your application goes through clean, with no correction notices slowing things down.</p>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="process-num">3</div>
+        <div class="process-content">
+          <h2>You're Licensed</h2>
+          <p>We track your application through approval and deliver your license. But it doesn't stop there:</p>
+          <ul>
+            <li><strong>Status tracking</strong> — you'll know where your application stands at all times</li>
+            <li><strong>Deficiency response</strong> — if the state requests additional information, we handle it</li>
+            <li><strong>Renewal tracking</strong> — our Atlas compliance platform monitors every deadline so your license never lapses</li>
+          </ul>
+          <p>The average client relationship lasts 9.4 years. That's because licensing isn't a one-time event. States change requirements. Licenses expire. We keep you covered.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section section-white">
+    <div class="container" style="max-width: 760px;">
+      <h2 class="section-title">Why Speed Matters</h2>
+      <p style="text-align:center; color: var(--text-secondary); max-width: 600px; margin: 0 auto 32px;">Every day without a license is a day you can't operate, can't earn revenue, and can't serve customers. Delays cost real money.</p>
+
+      <div class="speed-comparison">
+        <div class="compare-col">
+          <h3>Doing It Yourself</h3>
+          <div class="compare-items">
+            <div class="compare-item bad">Research requirements: 4-8 hours per state</div>
+            <div class="compare-item bad">Find correct forms: 1-3 hours</div>
+            <div class="compare-item bad">Fill out applications: 2-6 hours per state</div>
+            <div class="compare-item bad">Correction notices: 2-4 week delays</div>
+            <div class="compare-item bad">Track renewal deadlines: ongoing</div>
+          </div>
+        </div>
+        <div class="compare-col highlight">
+          <h3>With FastLicense</h3>
+          <div class="compare-items">
+            <div class="compare-item good">Tell us what you need: 2 minutes</div>
+            <div class="compare-item good">We prepare everything: 3 business days</div>
+            <div class="compare-item good">97% first-submission approval: no delays</div>
+            <div class="compare-item good">Renewals tracked automatically: forever</div>
+            <div class="compare-item good">One specialist, start to finish: no handoffs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Ready to Get Started?</h2>
+      <p>Get your estimated timeline in 30 seconds. No commitment required.</p>
+      <a href="/#quiz">Get Your Timeline</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, var(--dark) 0%, #1a2744 50%, var(--dark-mid) 100%);
+    padding: 56px 0 48px;
+    text-align: center;
+    color: white;
+  }
+  .page-hero h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; }
+  .page-hero p { color: #94A3B8; font-size: 1.05rem; }
+
+  .process-step {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 48px;
+    align-items: flex-start;
+  }
+  .process-num {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-top: 4px;
+  }
+  .process-content h2 { font-size: 1.3rem; margin-bottom: 10px; }
+  .process-content p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 12px; line-height: 1.7; }
+  .process-content ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 12px;
+  }
+  .process-content li {
+    padding: 6px 0 6px 20px;
+    position: relative;
+    font-size: 0.93rem;
+    color: var(--text-secondary);
+  }
+  .process-content li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .speed-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .compare-col {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+  }
+  .compare-col.highlight {
+    background: var(--primary-light);
+    border-color: var(--primary-border);
+  }
+  .compare-col h3 { font-size: 1rem; margin-bottom: 16px; text-align: center; }
+  .compare-item {
+    padding: 8px 0 8px 24px;
+    position: relative;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+  }
+  .compare-item::before {
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+  }
+  .compare-item.bad::before { content: '✗'; color: #DC2626; }
+  .compare-item.good::before { content: '✓'; color: var(--green); }
+
+  @media (max-width: 768px) {
+    .process-step { flex-direction: column; align-items: center; text-align: center; }
+    .process-content li { padding-left: 0; text-align: left; }
+    .process-content li::before { display: none; }
+    .speed-comparison { grid-template-columns: 1fr; }
+  }
+</style>
