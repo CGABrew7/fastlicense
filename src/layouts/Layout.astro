@@ -1,0 +1,66 @@
+---
+import '../styles/global.css';
+interface Props { title: string; description?: string; }
+const { title, description = "Get licensed fast. Tell us what you need, we'll tell you how fast you can have it. Powered by 28 years and 525,000+ filings." } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Fast<span>License</span></a>
+      <div class="nav-links">
+        <a href="/how-it-works">How It Works</a>
+        <a href="/licenses">License Types</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/about">About</a>
+        <a href="/#quiz" class="nav-cta">Get Your Timeline</a>
+      </div>
+    </div>
+  </nav>
+
+  <slot />
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="nav-logo">Fast<span>License</span></a>
+          <p>Fast business licensing, powered by Cornerstone Licensing. 28 years. 525,000+ filings. 50 states.</p>
+        </div>
+        <div>
+          <h4>Licenses</h4>
+          <a href="/licenses">All License Types</a>
+          <a href="/licenses/collection-agency">Collection Agency</a>
+          <a href="/licenses/consumer-lender">Consumer Lender</a>
+          <a href="/licenses/money-transmitter">Money Transmitter</a>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <a href="/how-it-works">How It Works</a>
+          <a href="/pricing">Pricing</a>
+          <a href="/blog">Blog</a>
+          <a href="/faq">FAQ</a>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+          <a href="/privacy">Privacy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 FastLicense. All rights reserved.</span>
+        <span>Applications processed by <a href="https://cornerstonelicensing.com" target="_blank" rel="noopener">Cornerstone Licensing</a></span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
