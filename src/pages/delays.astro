@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SourceList from '../components/SourceList.astro';
+import { DELAYS } from '../data/delays';
+import { sourceList } from '../data/sources';
+
+const ids = [...new Set(DELAYS.flatMap((d) => d.sourceIds))];
+---
+
+<Layout
+  title="What delays a license application — FastLicense"
+  description="Public reasons financial-services license filings stall: incomplete files, FBI name checks, control-person gaps, bonds, and exams."
+>
+  <section class="masthead">
+    <div class="wrap">
+      <p class="kicker">Delays</p>
+      <h1>The clock usually has not started.</h1>
+      <p class="lede">
+        Most “why is this taking months?” stories are completeness problems, background-check
+        queues, or a second state that never adopted the first state’s statute. These are process
+        facts from NMLS and the CSBS model act — not a private scorecard.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      {
+        DELAYS.map((d) => (
+          <article class="clock-box" style="margin-bottom:18px">
+            <h2>{d.title}</h2>
+            <p>{d.summary}</p>
+          </article>
+        ))
+      }
+      <SourceList sources={sourceList(ids)} />
+    </div>
+  </section>
+</Layout>

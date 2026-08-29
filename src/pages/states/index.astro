@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { STATES } from '../../data/states';
+import { clocksForState } from '../../data/clocks';
+---
+
+<Layout
+  title="State licensing timelines — FastLicense"
+  description="50-state index of collection, lending, money transmitter, and mortgage licensing timelines."
+>
+  <section class="masthead">
+    <div class="wrap">
+      <p class="kicker">By state</p>
+      <h1>Fifty states, same four cores.</h1>
+      <p class="lede">
+        Each state page lists collection, lending, money transmitter, and mortgage. Cited clocks
+        appear where we have a statute or a regulator timeframe.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap state-grid">
+      {
+        STATES.map((s) => {
+          const n = clocksForState(s.code).length;
+          return (
+            <a class="tile" href={`/states/${s.slug}/`}>
+              <strong>{s.name}</strong>
+              <span class="meta" style="display:block;margin-top:4px">
+                {n ? `${n} cited clock${n === 1 ? '' : 's'}` : 'Typical ranges unknown'}
+              </span>
+            </a>
+          );
+        })
+      }
+    </div>
+  </section>
+</Layout>

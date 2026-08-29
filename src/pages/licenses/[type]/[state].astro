@@ -1,0 +1,117 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import SourceList from '../../../components/SourceList.astro';
+import { DELAYS } from '../../../data/delays';
+import { getLicenseBySlug, LICENSES } from '../../../data/licenses';
+import { getStateBySlug, STATES } from '../../../data/states';
+import { recordFor } from '../../../lib/catalog';
+
+export function getStaticPaths() {
+  return STATES.flatMap((state) =>
+    LICENSES.map((license) => ({
+      params: { type: license.slug, state: state.slug },
+    })),
+  );
+}
+
+const license = getLicenseBySlug(Astro.params.type!);
+const state = getStateBySlug(Astro.params.state!);
+if (!license || !state) throw new Error('Unknown path');
+
+const record = recordFor(state, license);
+---
+
+<Layout
+  title={`${license.name} timeline in ${state.name} — FastLicense`}
+  description={`${state.name} ${license.name.toLowerCase()} licensing timeline. ${record.typicalLabel}.`}
+>
+  <section class="masthead">
+    <div class="wrap">
+      <p class="crumbs">
+        <a href="/licenses/">Licenses</a> /
+        <a href={`/licenses/${license.slug}/`}>{license.name}</a> /
+        {state.name}
+      </p>
+      <p class="kicker">{state.code} · {license.shortName}</p>
+      <h1>{license.name} in {state.name}</h1>
+      <p class="lede">
+        Typical processing time:
+        <span class={record.typicalPublished ? 'known' : 'unknown'}>{record.typicalLabel}</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>What is published</h2>
+      {
+        record.clocks.length === 0 && (
+          <p>
+            We did not find a regulator-published typical wait, or a cited statutory decision
+            clock, for this pair. The range is unknown. Do not plan a launch date from a vendor
+            week range that is not on the agency’s site.
+          </p>
+        )
+      }
+      {
+        record.clocks.map((c) => (
+          <div class="clock-box">
+            <p class="meta">{c.kind === 'statutory' ? 'Statutory clock' : 'Regulator-published timeframe'}{c.asOf ? ` · as of ${c.asOf}` : ''}</p>
+            <h3>{c.label}</h3>
+            <p>{c.summary}</p>
+            <p class="meta">
+              Clock starts: {c.clockStarts}. Deemed approval if silent: {c.deemedApproval ? 'yes, per the cited section' : 'no / not stated in the cited section'}.
+              Extendable: {c.extendable ? 'yes' : 'not stated'}.
+            </p>
+          </div>
+        ))
+      }
+
+      <h2>Where the file is reviewed</h2>
+      <ul>
+        {
+          record.regulators.map((r) => (
+            <li>
+              <a href={r.url} target="_blank" rel="noopener">{r.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <p>
+        Confirm the live license name and documents in the
+        <a href="https://mortgage.nationwidelicensingsystem.org/knowledge/Products/nmls/stateresourcecenter/SitePages/Checklist-Compiler.aspx">NMLS Checklist Compiler</a>.
+        This page does not decide whether you must file, or which product name applies.
+      </p>
+
+      <h2>What usually delays this family of filings</h2>
+      <ul>
+        {DELAYS.slice(0, 5).map((d) => (
+          <li>
+            <a href="/delays/">{d.title}</a>
+          </li>
+        ))}
+      </ul>
+      <p>
+        Paid expedite: none cited for this pair. See <a href="/expedite/">when expedite is real</a>.
+      </p>
+
+      <h2>Other cores in {state.name}</h2>
+      <p>
+        {
+          LICENSES.filter((l) => l.id !== license.id).map((l) => (
+            <>
+              <a href={`/licenses/${l.slug}/${state.slug}/`}>{l.shortName}</a>{' · '}
+            </>
+          ))
+        }
+        <a href={`/states/${state.slug}/`}>All four on the state page</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <SourceList sources={record.sources} />
+    </div>
+  </section>
+</Layout>

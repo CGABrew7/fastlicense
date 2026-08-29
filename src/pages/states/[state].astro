@@ -1,0 +1,49 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getStateBySlug, STATES } from '../../data/states';
+import { LICENSES } from '../../data/licenses';
+import { recordFor } from '../../lib/catalog';
+
+export function getStaticPaths() {
+  return STATES.map((s) => ({ params: { state: s.slug } }));
+}
+
+const state = getStateBySlug(Astro.params.state!);
+if (!state) throw new Error('Unknown state');
+
+const rows = LICENSES.map((l) => recordFor(state, l));
+---
+
+<Layout
+  title={`${state.name} licensing timelines — FastLicense`}
+  description={`${state.name} timelines for collection, lending, money transmitter, and mortgage company licenses.`}
+>
+  <section class="masthead">
+    <div class="wrap">
+      <p class="crumbs"><a href="/states/">States</a> / {state.name}</p>
+      <p class="kicker">{state.code}</p>
+      <h1>{state.name} timelines</h1>
+      <p class="lede">
+        Four cores. Typical week ranges stay unknown unless a regulator or statute published them.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      {
+        rows.map((r) => (
+          <a class="tile" href={`/licenses/${r.license.slug}/${state.slug}/`} style="margin-bottom:12px">
+            <h2>{r.license.name}</h2>
+            <p>
+              <span class={r.typicalPublished ? 'known' : 'unknown'}>{r.typicalLabel}</span>
+            </p>
+            <p class="meta" style="margin-top:8px">
+              {r.clocks[0]?.label ?? 'No cited clock'} · {r.regulators[0]?.name}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

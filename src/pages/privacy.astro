@@ -1,63 +1,47 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { SITE } from '../data/site';
 ---
 
-<Layout title="Privacy Policy — FastLicense" description="FastLicense privacy policy. How we collect, use, and protect your information.">
-  <section class="page-hero">
-    <div class="container">
-      <h1>Privacy Policy</h1>
-      <p>Last updated: August 2026</p>
+<Layout
+  title="Privacy — FastLicense"
+  description="FastLicense privacy policy. This site is a static directory. Contact goes to Cornerstone Licensing."
+>
+  <section class="masthead">
+    <div class="wrap">
+      <p class="kicker">Privacy</p>
+      <h1>What this static directory collects.</h1>
+      <p class="lede">Last updated August 2026.</p>
     </div>
   </section>
 
   <section class="section">
-    <div class="container" style="max-width: 720px;">
-      <div class="legal-content">
-        <h2>Information We Collect</h2>
-        <p>When you use our timeline estimator or contact form, we collect the information you provide: name, email, phone number, company name, license type, and state. We use this information solely to prepare your licensing quote and, if you choose to proceed, to process your application.</p>
+    <div class="wrap prose">
+      <h2>This site</h2>
+      <p>
+        FastLicense is a static public directory. There is no account system and no application
+        form hosted here. Pages are HTML files.
+      </p>
 
-        <h2>How We Use Your Information</h2>
-        <p>Your information is used to provide the services you request: generating timeline estimates, preparing licensing quotes, and processing applications. We share your information with our processing partner, Cornerstone Licensing, for the purpose of fulfilling your application. We do not sell your information to third parties.</p>
+      <h2>Logs and analytics</h2>
+      <p>
+        The host (intended: Cloudflare Pages) may keep standard request logs — IP address, user
+        agent, and the page requested — to operate the site and stop abuse. We do not run
+        advertising pixels on these pages.
+      </p>
 
-        <h2>Application Processing</h2>
-        <p>All license applications are prepared and filed by Cornerstone Licensing. When you submit an application through FastLicense, your information is shared with Cornerstone for processing. Cornerstone's own privacy policy governs their handling of your data during the application process.</p>
+      <h2>If you contact Cornerstone</h2>
+      <p>
+        Links labeled Contact Cornerstone go to
+        <a href={SITE.cornerstone.contact}>{SITE.cornerstone.name}</a>. Information you send there
+        is handled under Cornerstone’s own privacy terms, not by this satellite.
+      </p>
 
-        <h2>Cookies and Analytics</h2>
-        <p>We use basic analytics to understand how visitors use our site. This data is aggregated and does not personally identify you. We do not use tracking cookies for advertising purposes.</p>
-
-        <h2>Data Security</h2>
-        <p>We use industry-standard security measures to protect your personal information. All form submissions are transmitted over encrypted connections (HTTPS).</p>
-
-        <h2>Your Rights</h2>
-        <p>You can request access to, correction of, or deletion of your personal information at any time by contacting us. We will respond to all requests within 30 days.</p>
-
-        <h2>Contact</h2>
-        <p>For privacy-related questions, contact us at <a href="/contact">our contact page</a>.</p>
-      </div>
+      <h2>Questions</h2>
+      <p>
+        Privacy questions about this directory: use the <a href="/contact/">contact page</a>.
+        Questions about an application file: write Cornerstone directly.
+      </p>
     </div>
   </section>
 </Layout>
-
-<style>
-  .page-hero {
-    background: linear-gradient(135deg, var(--dark) 0%, #1a2744 50%, var(--dark-mid) 100%);
-    padding: 56px 0 48px;
-    text-align: center;
-    color: white;
-  }
-  .page-hero h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; }
-  .page-hero p { color: #94A3B8; font-size: 1.05rem; }
-
-  .legal-content h2 {
-    font-size: 1.15rem;
-    margin-top: 32px;
-    margin-bottom: 10px;
-  }
-  .legal-content h2:first-child { margin-top: 0; }
-  .legal-content p {
-    font-size: 0.92rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 12px;
-  }
-</style>

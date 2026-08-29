@@ -1,116 +1,43 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { SITE } from '../data/site';
 ---
 
-<Layout title="Contact — FastLicense" description="Get a licensing quote within 1 business day. Contact the FastLicense team.">
-  <section class="page-hero">
-    <div class="container">
-      <h1>Contact Us</h1>
-      <p>Get a detailed quote within 1 business day.</p>
+<Layout
+  title="Contact — FastLicense"
+  description="Contact Cornerstone Licensing about a filing calendar. FastLicense does not host an application form."
+>
+  <section class="masthead">
+    <div class="wrap">
+      <p class="kicker">Contact</p>
+      <h1>Talk to the filing desk.</h1>
+      <p class="lede">
+        FastLicense is a directory. It does not take applications or quotes on this domain. The
+        operating partner is {SITE.cornerstone.name}.
+      </p>
     </div>
   </section>
 
   <section class="section">
-    <div class="container" style="max-width: 680px;">
-      <div class="contact-card">
-        <h2>Get a Quote</h2>
-        <p>Tell us what you need and we'll respond with your timeline, cost, and required documents within 1 business day.</p>
+    <div class="wrap prose">
+      <h2>{SITE.cornerstone.name}</h2>
+      <p>
+        Phone: <a href={`tel:${SITE.cornerstone.phone.replace(/-/g, '')}`}>{SITE.cornerstone.phone}</a>
+      </p>
+      <p>
+        Web: <a href={SITE.cornerstone.contact}>{SITE.cornerstone.contact}</a>
+      </p>
+      <p>
+        Use that desk for a timeline review of a real file. Do not send social-security numbers or
+        full financials to a satellite inbox.
+      </p>
 
-        <form class="contact-form" action="#" method="POST">
-          <div class="form-group">
-            <label>Your name</label>
-            <input type="text" placeholder="Full name" required />
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" placeholder="you@company.com" required />
-          </div>
-          <div class="form-group">
-            <label>Phone (optional)</label>
-            <input type="tel" placeholder="(555) 123-4567" />
-          </div>
-          <div class="form-group">
-            <label>Company name (optional)</label>
-            <input type="text" placeholder="Your business name" />
-          </div>
-          <div class="form-group">
-            <label>What do you need?</label>
-            <textarea rows="4" placeholder="Tell us about your licensing needs: license type, state(s), timeline, and any other details." required></textarea>
-          </div>
-          <button type="submit" class="btn">Send Message</button>
-          <p class="form-note">We respond within 1 business day. No sales pitch, just your quote.</p>
-        </form>
-      </div>
-
-      <div class="alt-contact">
-        <h3>Prefer to use the timeline estimator?</h3>
-        <p>Get an instant estimate for common license types. Three questions, 30 seconds.</p>
-        <a href="/#quiz" class="btn-outline">Get Your Timeline</a>
-      </div>
+      <h2>Editorial corrections</h2>
+      <p>
+        If a cited statute or regulator page has moved, or a published processing-time notice
+        changed, that is an editorial fix for this directory. Start at
+        <a href="/methodology/">methods</a> so we can attach a new source instead of a guess.
+      </p>
     </div>
   </section>
 </Layout>
-
-<style>
-  .page-hero {
-    background: linear-gradient(135deg, var(--dark) 0%, #1a2744 50%, var(--dark-mid) 100%);
-    padding: 56px 0 48px;
-    text-align: center;
-    color: white;
-  }
-  .page-hero h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; }
-  .page-hero p { color: #94A3B8; font-size: 1.05rem; }
-
-  .contact-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 36px;
-    box-shadow: var(--shadow);
-  }
-  .contact-card h2 { font-size: 1.3rem; margin-bottom: 8px; }
-  .contact-card > p { font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 24px; }
-
-  .contact-form textarea {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-family: inherit;
-    color: var(--text);
-    background: var(--bg);
-    resize: vertical;
-  }
-  .contact-form textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
-  }
-  .form-note {
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 10px;
-  }
-
-  .alt-contact {
-    text-align: center;
-    margin-top: 32px;
-    padding: 28px;
-  }
-  .alt-contact h3 { font-size: 1.05rem; margin-bottom: 6px; }
-  .alt-contact p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px; }
-  .btn-outline {
-    display: inline-block;
-    padding: 12px 28px;
-    border: 2px solid var(--primary);
-    color: var(--primary);
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-  }
-  .btn-outline:hover { background: var(--primary); color: white; text-decoration: none; }
-</style>

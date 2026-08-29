@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { CLOCKS } from '../data/clocks';
+import { LICENSES } from '../data/licenses';
+import { STATES } from '../data/states';
+import { SITE } from '../data/site';
+
+const pairCount = STATES.length * LICENSES.length;
+---
+
+<Layout
+  title="Methods — FastLicense"
+  description="How FastLicense treats statutory clocks, regulator-published times, and unknown typical ranges."
+>
+  <section class="masthead">
+    <div class="wrap">
+      <p class="kicker">Methods</p>
+      <h1>Unknown is a finding, not a gap we fill.</h1>
+      <p class="lede">
+        {pairCount} state × license pages. {CLOCKS.length} clocks with a statute or a
+        regulator-published timeframe as of {SITE.accessed}.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>1. Three kinds of time</h2>
+      <p><strong>Typical processing time.</strong> A range the regulator itself publishes (“reviewed within 3 weeks”). Rare for company licenses. If we cannot point at that page, the label is “Typical range unknown.”</p>
+      <p><strong>Statutory decision clock.</strong> A statute that says the agency must approve or deny within N days after a defined start date. That is a legal outer bound, not an average. Completeness rules and “good cause” extensions matter.</p>
+      <p><strong>Deemed approval.</strong> Some money-transmitter statutes treat silence after the clock as approval. New York’s money-transmitter statute does not. We only mark deemed approval where the cited section says so.</p>
+
+      <h2>2. What we will not print</h2>
+      <ul>
+        <li>Invented “fast-track” and “standard” week ranges.</li>
+        <li>Vendor price sheets (that is <a href={SITE.sisters.store.url}>License Store</a>).</li>
+        <li>Who must file, or which form to use (that is <a href={SITE.sisters.simple.url}>Licensing Made Simple</a>).</li>
+        <li>Star ratings, testimonials, or unnamed “clients say.”</li>
+        <li>A hometown slant. The index is fifty states, same template.</li>
+      </ul>
+
+      <h2>3. NMLS is a channel, not a timer</h2>
+      <p>
+        The Nationwide Multistate Licensing System is how many of these company licenses are
+        requested. NMLS does not replace the state review clock. Confirm the current license name
+        and checklist in the NMLS Checklist Compiler before you treat a page as the filing path.
+      </p>
+
+      <h2>4. Adjacent facts</h2>
+      <p>
+        Individual mortgage loan originator endorsements sometimes have a published window (see
+        California DRE on the California mortgage page). That is labeled as an MLO clock, not as
+        the company-license typical time.
+      </p>
+
+      <h2>5. Refresh</h2>
+      <p>
+        Sources on this build are stamped accessed {SITE.accessed}. Statutes and DRE timeframes
+        move. Follow the URL on the page before you promise a launch date.
+      </p>
+    </div>
+  </section>
+</Layout>
