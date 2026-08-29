@@ -15,13 +15,17 @@ export interface TimelineRecord {
 }
 
 export function typicalLabel(clocks: Clock[]): { published: boolean; label: string } {
-  const published = clocks.find((c) => c.kind === "published_typical");
+  const published = clocks.find((c) => c.kind === "published_typical" && !c.adjacent);
   if (published) return { published: true, label: published.label };
-  if (clocks.length) {
+  const ownClocks = clocks.filter((c) => !c.adjacent);
+  if (ownClocks.length) {
     return {
       published: false,
       label: "Typical range unknown — statutory clock cited",
     };
+  }
+  if (clocks.some((c) => c.adjacent)) {
+    return { published: false, label: "Typical range unknown — adjacent clock cited" };
   }
   return { published: false, label: "Typical range unknown" };
 }

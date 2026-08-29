@@ -56,7 +56,7 @@ const record = recordFor(state, license);
       {
         record.clocks.map((c) => (
           <div class="clock-box">
-            <p class="meta">{c.kind === 'statutory' ? 'Statutory clock' : 'Regulator-published timeframe'}{c.asOf ? ` · as of ${c.asOf}` : ''}</p>
+            <p class="meta">{c.adjacent ? 'Adjacent product · ' : ''}{c.kind === 'statutory' ? 'Statutory clock' : 'Regulator-published timeframe'}{c.asOf ? ` · as of ${c.asOf}` : ''}</p>
             <h3>{c.label}</h3>
             <p>{c.summary}</p>
             <p class="meta">

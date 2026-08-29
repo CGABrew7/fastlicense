@@ -13,6 +13,8 @@ export interface Clock {
   clockStarts: string;
   deemedApproval: boolean;
   extendable: boolean;
+  /** Adjacent product (e.g. individual MLO) — do not treat as this license's typical time. */
+  adjacent?: boolean;
   asOf?: string;
   sourceIds: string[];
 }
@@ -98,6 +100,7 @@ export const CLOCKS: Clock[] = [
     clockStarts: "submission of the NMLS MLO endorsement filing to DRE",
     deemedApproval: false,
     extendable: false,
+    adjacent: true,
     asOf: "2026-05-04",
     sourceIds: ["ca_dre_times", "ca_dre_mlo"],
   },
