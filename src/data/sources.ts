@@ -65,9 +65,9 @@ export const SOURCES: Record<string, Source> = {
   },
   il_mtma: {
     id: "il_mtma",
-    title: "205 ILCS 658 — Uniform Money Transmission Modernization Act",
+    title: "205 ILCS 658/5-5 — Issuance of license",
     publisher: "Illinois General Assembly",
-    url: "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=4543&ChapterID=5",
+    url: "https://www.ilga.gov/legislation/ilcs/documents/020506580K5-5.htm",
     accessed: "2026-08-29",
   },
   mo_mt: {

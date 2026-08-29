@@ -56,12 +56,12 @@ export const CLOCKS: Clock[] = [
     kind: "statutory",
     label: "120-day complete-application clock under the Illinois MTMA",
     summary:
-      "Illinois replaced its prior transmitters-of-money statute with the Uniform Money Transmission Modernization Act (205 ILCS 658). The CSBS model that statute follows — and the Illinois act implements — requires an approve-or-deny decision within 120 days after the file is complete, with deemed approval if the secretary does neither. Completeness includes required items such as FBI criminal-background-check results.",
+      "205 ILCS 658/5-5 says that once the Secretary determines an original money-transmission application is complete, the Secretary shall approve or deny it within 120 days after the completion date, unless the Secretary extends that period. If neither happens within 120 days or any extension, the application is approved and the license takes effect the next business day. Completeness on its face includes the FBI criminal-background-check response.",
     days: 120,
-    clockStarts: "the date the application is determined complete under 205 ILCS 658",
+    clockStarts: "the date the Secretary determines the application is complete under 205 ILCS 658/5-5",
     deemedApproval: true,
     extendable: true,
-    sourceIds: ["il_mtma", "csbs_mtma_model"],
+    sourceIds: ["il_mtma"],
   },
   {
     state: "MO",
