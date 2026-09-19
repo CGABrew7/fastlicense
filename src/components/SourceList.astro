@@ -1,0 +1,23 @@
+---
+import type { Source } from '../data/sources';
+
+interface Props {
+  sources: Source[];
+}
+
+const { sources } = Astro.props;
+---
+
+<div class="sources">
+  <h2>Sources</h2>
+  <ol>
+    {
+      sources.map((s) => (
+        <li>
+          <a href={s.url} target="_blank" rel="noopener">{s.title}</a>
+          <span class="meta"> — {s.publisher}. Accessed {s.accessed}.</span>
+        </li>
+      ))
+    }
+  </ol>
+</div>

@@ -1,0 +1,141 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SourceList from '../../components/SourceList.astro';
+import { getLicenseBySlug } from '../../data/licenses';
+import { clocksForLicense } from '../../data/clocks';
+import { STATES } from '../../data/states';
+import { recordFor } from '../../lib/catalog';
+import { sourceList } from '../../data/sources';
+
+export function getStaticPaths() {
+  return ['collection', 'lending', 'money-transmitter', 'mortgage'].map((type) => ({
+    params: { type },
+  }));
+}
+
+const license = getLicenseBySlug(Astro.params.type!);
+if (!license) throw new Error('Unknown license');
+
+const clocks = clocksForLicense(license.id);
+const rows = STATES.map((s) => recordFor(s, license));
+const extraIds =
+  license.id === 'money-transmitter'
+    ? ['csbs_mtma', 'csbs_mtma_model', 'nmls_checklist']
+    : license.id === 'mortgage'
+      ? ['safe_act', 'nmls_checklist']
+      : ['nmls_checklist'];
+---
+
+<Layout
+  title={`${license.name} timelines — FastLicense`}
+  description={`How long ${license.name.toLowerCase()} licensing takes, by state. Typical ranges stay unknown unless a regulator or statute published them.`}
+>
+  <section class="masthead">
+    <div class="wrap">
+      <p class="crumbs"><a href="/licenses/">Licenses</a> / {license.name}</p>
+      <p class="kicker">{license.core}</p>
+      <h1>{license.name} timelines</h1>
+      <p class="lede">{license.summary}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>What we can say nationally</h2>
+      <p>
+        Confirm the current license name and documents in the
+        <a href="https://mortgage.nationwidelicensingsystem.org/knowledge/Products/nmls/stateresourcecenter/SitePages/Checklist-Compiler.aspx">NMLS Checklist Compiler</a>.
+        NMLS is a filing channel for many company licenses in this family ({license.nmlsFamily}). It
+        is not a published typical wait.
+      </p>
+      {
+        license.id === 'money-transmitter' && (
+          <p>
+            CSBS reports that thirty-one states have enacted the Money Transmission Modernization
+            Act in full or in part. The model act’s issuance section is a 120-day complete-application
+            clock with deemed approval unless extended for good cause. We only attach that clock to
+            a state page when we cite that state’s statute. Completeness in the model includes the
+            FBI criminal-background-check response.
+          </p>
+        )
+      }
+      {
+        license.id === 'mortgage' && (
+          <p>
+            The SAFE Act put individual mortgage loan originators on a nationwide system. Company
+            lender, broker, and servicer licenses remain state licenses. California DRE publishes a
+            current review window for MLO endorsements; that is adjacent, and labeled as such on
+            the California page. We do not treat it as the company-license typical time.
+          </p>
+        )
+      }
+      {
+        license.id === 'collection' && (
+          <p>
+            Some states have no statewide collection-agency license. If no application is filed,
+            there is no state processing queue. This page does not decide whether you need a
+            license. For who-must-file questions, use
+            <a href="https://licensingmadesimple.com">Licensing Made Simple</a>.
+          </p>
+        )
+      }
+      {
+        license.id === 'lending' && (
+          <p>
+            Consumer-finance licenses are not one product. A state may split installment lenders,
+            payday, sales finance, and industrial loan companies across different chapters. We do
+            not invent a blended week range for “lending.”
+          </p>
+        )
+      }
+
+      {
+        clocks.length > 0 && (
+          <>
+            <h2>Cited clocks</h2>
+            {clocks.map((c) => (
+              <div class="clock-box">
+                <p class="meta">{c.state} · {c.kind === 'statutory' ? 'Statute' : 'Regulator published'}</p>
+                <h3>{c.label}</h3>
+                <p>{c.summary}</p>
+              </div>
+            ))}
+          </>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>All 50 states</h2>
+      <div class="table-wrap" style="margin-top:16px">
+        <table>
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>Typical processing time</th>
+              <th>Cited clock</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              rows.map((r) => (
+                <tr>
+                  <td>
+                    <a href={`/licenses/${license.slug}/${r.state.slug}/`}>{r.state.name}</a>
+                  </td>
+                  <td>
+                    <span class={r.typicalPublished ? 'known' : 'unknown'}>{r.typicalLabel}</span>
+                  </td>
+                  <td class="meta">{r.clocks[0]?.label ?? 'None cited'}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <SourceList sources={sourceList(extraIds)} />
+    </div>
+  </section>
+</Layout>
