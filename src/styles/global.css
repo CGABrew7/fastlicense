@@ -58,6 +58,29 @@ a:hover {
   z-index: 20;
 }
 
+.staging-banner {
+  background: var(--band);
+  color: #f4efe4;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px solid #3d352e;
+}
+
+.staging-banner .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: baseline;
+}
+
+.staging-banner strong {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: #e8c27a;
+}
+
 .wrap {
   width: min(1080px, calc(100% - 40px));
   margin: 0 auto;
