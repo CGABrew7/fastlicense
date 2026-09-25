@@ -25,7 +25,7 @@ Four cores: collection / ARM, consumer lending, money transmitter, mortgage comp
 - `robots.txt` disallows crawlers
 - `sitemap.xml` is empty
 - Cloudflare Pages `_headers` sends `X-Robots-Tag: noindex, nofollow`
-- A **Private staging** banner shows on every page
+- A muted footer note records private staging for internal review. The header and homepage lead do not.
 
 Use the Cloudflare Pages preview as the demo, not the custom domain.
 
