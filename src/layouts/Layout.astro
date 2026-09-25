@@ -22,6 +22,13 @@ const indexable = SITE.publicIndex;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="robots" content={indexable ? "index,follow" : "noindex,nofollow"} />
+    {
+      !indexable && (
+        <Fragment
+          set:html={"<!-- Private staging for Cornerstone / Hanok review. noindex,nofollow. Status note is in the footer, not the header. -->"}
+        />
+      )
+    }
     <meta name="theme-color" content="#221C16" />
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
@@ -40,20 +47,6 @@ const indexable = SITE.publicIndex;
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    {
-      !indexable && (
-        <div class="staging-banner" role="status">
-          <div class="wrap">
-            <strong>Private staging</strong>
-            <span>
-              Pages preview for Cornerstone / Hanok review. Not a public launch of
-              fastlicense.com and not a marketing publish to cornerstonelicensing.com.
-              Crawlers are told not to index.
-            </span>
-          </div>
-        </div>
-      )
-    }
     <header class="site-header" id="site-header">
       <div class="wrap header-bar">
         <a class="brand" href="/">
@@ -137,6 +130,15 @@ const indexable = SITE.publicIndex;
           <span>&copy; 2026 FastLicense · {SITE.owner}</span>
           <span>Informational only. Not legal advice. Applications are filed by {SITE.cornerstone.name}.</span>
         </div>
+        {
+          !indexable && (
+            <p class="staging-note">
+              Private staging for Cornerstone / Hanok review. Crawlers are set to noindex.
+              This preview is not a public launch of fastlicense.com and not a marketing publish
+              to cornerstonelicensing.com.
+            </p>
+          )
+        }
       </div>
     </footer>
 
