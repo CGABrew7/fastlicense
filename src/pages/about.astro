@@ -1,43 +1,66 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { SITE } from '../data/site';
+import { CLOCKS } from '../data/clocks';
+import { LICENSES } from '../data/licenses';
+import { STATES } from '../data/states';
+
+const pages = STATES.length * LICENSES.length;
 ---
 
 <Layout
   title="About — FastLicense"
-  description="FastLicense is the timeline satellite in Cornerstone’s three-site directory. It publishes cited clocks, not invented week ranges."
+  description="FastLicense is Hanok’s cited timeline desk for Cornerstone’s four U.S. licensing cores. A number is published only when a statute or a regulator page is."
 >
   <section class="masthead">
     <div class="wrap">
       <p class="kicker">About</p>
-      <h1>A calendar, not a brochure.</h1>
+      <h1>A launch date should survive a public source.</h1>
       <p class="lede">
-        FastLicense is the speed and timeline desk for Cornerstone’s four cores. It exists so
-        operators can see what is published — and what is not — before they plan a launch date.
+        FastLicense is the timeline desk for collection, consumer lending, money transmission, and
+        mortgage company licenses in the United States. Hanok keeps the citations. Cornerstone Licensing
+        prepares and files the work.
       </p>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap prose">
-      <h2>Who this is for</h2>
+      <h2>The question that kept coming back</h2>
       <p>
-        Lenders, mortgage companies, money services businesses, and accounts receivable management
-        firms that need a honest read on review time. The directory is national. It is not written
-        around one city or one state’s office culture.
+        Someone on the team always asks how long the license will take. The useful answer depends on
+        the state, the core, and whether the agency has published a number at all. This directory exists
+        so that answer is a page you can open — a statute, a regulator notice, or a deliberate blank —
+        before it hardens into a date on a slide.
       </p>
 
-      <h2>Who files the work</h2>
+      <h2>Who it is for</h2>
       <p>
-        Applications discussed here are prepared and filed by
-        <a href={SITE.cornerstone.url}>{SITE.cornerstone.name}</a>, the U.S. licensing operating
-        partner for those four cores. FastLicense does not take filings, collect fees, or issue
-        licenses.
+        Lenders, mortgage companies, money services businesses, and accounts receivable firms building
+        a U.S. filing calendar. Teams start here from the United States and from abroad, including
+        readers who arrive at fastlicence.com. The index is national: the same four cores, the same
+        editorial rule, in every state.
       </p>
 
-      <h2>The three-site split</h2>
+      <h2>Who keeps the pages</h2>
       <p>
-        <strong>This site</strong> answers how long, what delays, and when an expedite exists.
+        FastLicense is a Hanok satellite, kept for Cornerstone’s operators. Jeff Brewer owns the desk.
+        The editorial rule is narrow on purpose: if a figure is not on a public statute or a regulator
+        page, the typical range stays blank. There is no gallery of stock portraits. The citation is the
+        credential. Sources on this build were accessed {SITE.accessed}. {CLOCKS.length} clocks earned a
+        number. The other pages among the {pages} pairs did not.
+      </p>
+      <p>
+        Filings, fees, and issued licenses stay with
+        <a href={SITE.cornerstone.url}>{SITE.cornerstone.name}</a>, the operating partner for those four
+        cores. A timeline review of a real file starts at
+        <a href={SITE.cornerstone.contact}>Ask Cornerstone</a>, or by phone at {SITE.cornerstone.phone}.
+      </p>
+
+      <h2>Three desks, one filing partner</h2>
+      <p>
+        <strong>This site</strong> answers how long a filed application can sit, what commonly stops the
+        clock, and when an expedite is actually published.
       </p>
       <p>
         <a href={SITE.sisters.simple.url}>{SITE.sisters.simple.name}</a> answers {SITE.sisters.simple.job}.
@@ -45,12 +68,16 @@ import { SITE } from '../data/site';
       <p>
         <a href={SITE.sisters.store.url}>{SITE.sisters.store.name}</a> answers {SITE.sisters.store.job}.
       </p>
-
-      <h2>Ownership</h2>
       <p>
-        FastLicense is a Hanok satellite. Editorial rules live on the
-        <a href="/methodology/">methods</a> page. If a figure is not on a public statute or
-        regulator page, we leave the typical range blank.
+        An FCA authorisation timetable is a different desk. It is not part of this directory. If the
+        filing is in a U.S. state, the clock to read is the one on that state’s page.
+      </p>
+
+      <p style="margin-top:28px">
+        <a class="btn btn-solid" href={SITE.cornerstone.contact} target="_blank" rel="noopener">Ask Cornerstone</a>
+      </p>
+      <p>
+        The editorial rule, in full, is on <a href="/methodology/">methods</a>.
       </p>
     </div>
   </section>
