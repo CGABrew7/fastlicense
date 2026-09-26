@@ -919,6 +919,12 @@ th {
     grid-template-columns: 1fr 1fr;
   }
 
+  .problem-grid article:last-child,
+  .steps li:last-child,
+  .sister-grid > :last-child {
+    grid-column: 1 / -1;
+  }
+
   .fact-row {
     grid-template-columns: 1fr 1fr;
   }
