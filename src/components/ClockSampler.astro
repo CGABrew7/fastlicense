@@ -1,0 +1,239 @@
+---
+import { CLOCKS, clockSources } from '../data/clocks';
+import { LICENSES } from '../data/licenses';
+import { STATES } from '../data/states';
+import { regulatorsFor } from '../data/regulators';
+import { typicalLabel } from '../lib/catalog';
+
+const pairs = STATES.flatMap((state) =>
+  LICENSES.map((license) => {
+    const clocks = CLOCKS.filter((c) => c.state === state.code && c.license === license.id);
+    const typical = typicalLabel(clocks);
+    return {
+      state: state.code,
+      stateName: state.name,
+      license: license.id,
+      licenseName: license.name,
+      typicalLabel: typical.label,
+      typicalPublished: typical.published,
+      page: `/licenses/${license.slug}/${state.slug}/`,
+      regulators: regulatorsFor(state.code, license.id),
+      clocks: clocks.map((c) => ({
+        kind: c.kind,
+        label: c.label,
+        summary: c.summary,
+        days: c.days ?? null,
+        clockStarts: c.clockStarts,
+        deemedApproval: c.deemedApproval,
+        extendable: c.extendable,
+        adjacent: Boolean(c.adjacent),
+        asOf: c.asOf ?? null,
+        sources: clockSources(c).map((s) => ({
+          title: s.title,
+          publisher: s.publisher,
+          url: s.url,
+        })),
+      })),
+    };
+  }),
+);
+
+const initial = pairs.find((p) => p.state === 'TX' && p.license === 'money-transmitter')!;
+const opening = initial.clocks[0];
+
+const presets = [
+  { state: 'TX', license: 'money-transmitter', label: 'Texas · 120-day statute' },
+  { state: 'NY', license: 'money-transmitter', label: 'New York · 90-day filing clock' },
+  { state: 'CA', license: 'mortgage', label: 'California · adjacent MLO window' },
+  { state: 'AL', license: 'collection', label: 'Alabama · typical range unknown' },
+];
+---
+
+<div class="sampler" id="clock-sampler">
+  <div class="sampler-controls">
+    <label>
+      <span>State</span>
+      <select id="sampler-state" name="state">
+        {
+          STATES.map((s) => (
+            <option value={s.code} selected={s.code === 'TX'}>
+              {s.name}
+            </option>
+          ))
+        }
+      </select>
+    </label>
+    <label>
+      <span>License</span>
+      <select id="sampler-license" name="license">
+        {
+          LICENSES.map((l) => (
+            <option value={l.id} selected={l.id === 'money-transmitter'}>
+              {l.name}
+            </option>
+          ))
+        }
+      </select>
+    </label>
+  </div>
+
+  <div class="preset-row">
+    {
+      presets.map((p) => {
+        const pair = pairs.find((row) => row.state === p.state && row.license === p.license)!;
+        const active = p.state === 'TX' && p.license === 'money-transmitter';
+        return (
+          <a
+            class:list={['preset', { 'is-active': active }]}
+            href={pair.page}
+            data-state={p.state}
+            data-license={p.license}
+            aria-current={active ? 'true' : undefined}
+          >
+            {p.label}
+          </a>
+        );
+      })
+    }
+  </div>
+
+  <div class="sampler-out" id="sampler-out" aria-live="polite">
+    <p class="meta">{initial.stateName} · {initial.licenseName}</p>
+    <div class="chip-row">
+      <span class="chip chip-live">Statutory clock</span>
+    </div>
+    {opening.days && (
+      <p class="figure">{opening.days}<span>days</span></p>
+    )}
+    <h3>{opening.label}</h3>
+    <p class="sampler-summary">{opening.summary}</p>
+    <p class="meta sampler-meta">Clock starts: {opening.clockStarts}.</p>
+    <p class="meta sampler-meta">
+      Deemed approval if silent: {opening.deemedApproval ? 'yes, per the cited section' : 'no / not stated in the cited section'}.
+      Extendable: {opening.extendable ? 'yes' : 'not stated'}.
+    </p>
+    <p class="meta sampler-meta">
+      Source: {opening.sources[0].publisher} — {opening.sources[0].title}
+    </p>
+    <div class="sampler-actions">
+      <a href={initial.page}>Open the full page</a>
+      <a href={opening.sources[0].url} target="_blank" rel="noopener">{opening.sources[0].title}</a>
+    </div>
+  </div>
+  <p class="note" style="margin-top:12px">
+    The panel reads the same clocks as the state pages. Changing the state or the license does not create a timeframe.
+  </p>
+</div>
+
+<script define:vars={{ pairs }}>
+  const stateSel = document.getElementById('sampler-state');
+  const licenseSel = document.getElementById('sampler-license');
+  const out = document.getElementById('sampler-out');
+
+  function findPair(stateCode, licenseId) {
+    return pairs.find((p) => p.state === stateCode && p.license === licenseId);
+  }
+
+  function clear(node) {
+    while (node.firstChild) node.removeChild(node.firstChild);
+  }
+
+  function add(parent, tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = text;
+    parent.appendChild(node);
+    return node;
+  }
+
+  function markPresets(stateCode, licenseId) {
+    document.querySelectorAll('.preset').forEach((link) => {
+      const on = link.dataset.state === stateCode && link.dataset.license === licenseId;
+      link.classList.toggle('is-active', on);
+      if (on) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  function render(stateCode, licenseId) {
+    const pair = findPair(stateCode, licenseId);
+    if (!pair || !out) return;
+    markPresets(stateCode, licenseId);
+    clear(out);
+
+    add(out, 'p', 'meta', `${pair.stateName} · ${pair.licenseName}`);
+    const chips = add(out, 'div', 'chip-row');
+    const clocks = pair.clocks;
+
+    if (!clocks.length) {
+      add(chips, 'span', 'chip chip-quiet', 'Typical range unknown');
+      add(out, 'h3', null, pair.typicalLabel);
+      add(
+        out,
+        'p',
+        'sampler-summary',
+        'No statutory decision clock and no regulator-published typical wait are on file for this pair. The full page names the regulator desk.',
+      );
+    } else {
+      clocks.forEach((clock, index) => {
+        if (index > 0) add(out, 'hr');
+        if (clock.adjacent) add(chips, 'span', 'chip chip-adj', 'Adjacent product');
+        else if (clock.kind === 'statutory') add(chips, 'span', 'chip chip-live', 'Statutory clock');
+        else add(chips, 'span', 'chip chip-live', 'Regulator-published');
+        if (clock.days) {
+          const fig = add(out, 'p', 'figure', String(clock.days));
+          add(fig, 'span', null, 'days');
+        }
+        add(out, 'h3', null, clock.label);
+        add(out, 'p', 'sampler-summary', clock.summary);
+        add(out, 'p', 'meta sampler-meta', `Clock starts: ${clock.clockStarts}.`);
+        const deemed = clock.deemedApproval ? 'yes, per the cited section' : 'no / not stated in the cited section';
+        const extend = clock.extendable ? 'yes' : 'not stated';
+        add(out, 'p', 'meta sampler-meta', `Deemed approval if silent: ${deemed}. Extendable: ${extend}.`);
+        if (clock.asOf) add(out, 'p', 'meta sampler-meta', `As of ${clock.asOf}.`);
+        if (clock.sources[0]) {
+          add(
+            out,
+            'p',
+            'meta sampler-meta',
+            `Source: ${clock.sources[0].publisher} — ${clock.sources[0].title}`,
+          );
+        }
+      });
+    }
+
+    if (pair.regulators.length) {
+      add(
+        out,
+        'p',
+        'meta sampler-meta',
+        `Regulator desk: ${pair.regulators.map((r) => r.name).join('; ')}.`,
+      );
+    }
+
+    const actions = add(out, 'div', 'sampler-actions');
+    const page = add(actions, 'a', null, 'Open the full page');
+    page.href = pair.page;
+    const source = clocks[0]?.sources?.[0];
+    if (source) {
+      const ext = add(actions, 'a', null, source.title);
+      ext.href = source.url;
+      ext.target = '_blank';
+      ext.rel = 'noopener';
+    }
+  }
+
+  stateSel?.addEventListener('change', () => render(stateSel.value, licenseSel.value));
+  licenseSel?.addEventListener('change', () => render(stateSel.value, licenseSel.value));
+
+  document.querySelectorAll('.preset').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (!stateSel || !licenseSel) return;
+      stateSel.value = link.dataset.state;
+      licenseSel.value = link.dataset.license;
+      render(stateSel.value, licenseSel.value);
+      out?.scrollIntoView({ block: 'nearest' });
+    });
+  });
+</script>

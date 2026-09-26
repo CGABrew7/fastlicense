@@ -1,41 +1,149 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ClockSampler from '../components/ClockSampler.astro';
 import { LICENSES } from '../data/licenses';
 import { SITE } from '../data/site';
-import { CLOCKS } from '../data/clocks';
+import { CLOCKS, clockSources } from '../data/clocks';
 import { STATES } from '../data/states';
 
 const cited = CLOCKS.length;
 const pages = STATES.length * LICENSES.length;
+const texas = CLOCKS.find((c) => c.state === 'TX' && c.license === 'money-transmitter')!;
+const texasSource = clockSources(texas)[0];
+const texasState = STATES.find((s) => s.code === 'TX')!;
+const texasLicense = LICENSES.find((l) => l.id === 'money-transmitter')!;
+
+const proof = CLOCKS.map((clock) => {
+  const state = STATES.find((s) => s.code === clock.state)!;
+  const license = LICENSES.find((l) => l.id === clock.license)!;
+  const source = clockSources(clock)[0];
+  return { clock, state, license, source };
+});
 ---
 
-<Layout title="FastLicense — Cited timelines for U.S. licensing">
-  <section class="masthead">
+<Layout
+  title="FastLicense — Cited timelines for U.S. business licensing"
+  description="Cited statutory clocks and regulator-published waits for U.S. collection, lending, money transmitter, and mortgage company licenses. A typical range stays blank when it is not published."
+>
+  <section class="hero">
     <div class="wrap">
-      <p class="kicker">Statutory clocks · published waits · delays by state</p>
-      <h1>Cited timelines for U.S. business licensing.</h1>
-      <p class="lede">
-        Statutory clocks, regulator-published waits, and common delays by state, for
-        Cornerstone’s four cores: collection / ARM, consumer lending, money transmitters,
-        and mortgage companies. A typical processing range is shown when a regulator page or
-        a cited statute publishes it, and marked unknown otherwise.
-      </p>
+      <div class="hero-grid">
+        <div>
+          <p class="kicker">Cited U.S. licensing timelines</p>
+          <h1>See the cited clock before you set a launch date.</h1>
+          <p class="lede">
+            For operators sequencing collection, consumer lending, money transmission, and mortgage
+            company filings. Fifty states. A figure appears when a statute or a regulator page publishes it.
+          </p>
+          <div class="btn-row">
+            <a class="btn btn-solid" href={SITE.cornerstone.contact} target="_blank" rel="noopener">Ask Cornerstone</a>
+            <a class="text-cta" href="#sampler">Read a cited clock</a>
+          </div>
+        </div>
+        <article class="ledger" aria-label="Texas money transmitter statutory clock">
+          <p class="kicker">{texas.state} · {texasLicense.shortName}</p>
+          <p class="figure">{texas.days}<span>days</span></p>
+          <h2>{texas.label}</h2>
+          <p>
+            Statutory clock. Deemed approval if the agency is silent. The period may be extended for good cause.
+            Clock starts: {texas.clockStarts}.
+          </p>
+          <p class="meta" style="margin-top:14px">
+            <a href={texasSource.url} target="_blank" rel="noopener">{texasSource.title}</a>
+            <br />
+            <a href={`/licenses/${texasLicense.slug}/${texasState.slug}/`}>Open the Texas page</a>
+          </p>
+        </article>
+      </div>
+      <ul class="fact-row">
+        <li><strong>{pages}</strong><span>state × license pages</span></li>
+        <li><strong>{cited}</strong><span>cited clocks in this build</span></li>
+        <li><strong>4</strong><span>cores Cornerstone files</span></li>
+        <li><strong>{SITE.accessed}</strong><span>sources accessed</span></li>
+      </ul>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section band-rule" id="problem">
     <div class="wrap">
-      <h2>Four cores</h2>
-      <p class="note" style="margin-bottom:16px">
-        {pages} state × license pages. {cited} clocks with a statute or a regulator-published
-        timeframe. The rest stay blank on purpose.
-      </p>
-      <div class="core-grid">
+      <div class="section-head">
+        <p class="kicker">The problem</p>
+        <h2>The date on the slide is usually ahead of the file.</h2>
+        <p>
+          A launch calendar is only as sturdy as the clock underneath it. These are the three places
+          that clock gets misread.
+        </p>
+      </div>
+      <div class="problem-grid">
+        <article>
+          <span class="index-no">01</span>
+          <h3>Completeness starts the statute.</h3>
+          <p>
+            The statutory windows in this directory start when the agency treats the application as
+            complete, not the hour someone clicks submit. A deficiency letter is how most long waits begin.
+          </p>
+        </article>
+        <article>
+          <span class="index-no">02</span>
+          <h3>A deadline and an average are different.</h3>
+          <p>
+            A 120-day money-transmitter statute is a decision deadline after completeness. Several of
+            those statutes allow an extension for good cause. Silence counts as approval only where the cited section says so.
+          </p>
+        </article>
+        <article>
+          <span class="index-no">03</span>
+          <h3>Unpublished means the cell stays blank.</h3>
+          <p>
+            Most of the {pages} pair pages have no regulator-published typical range. The blank is
+            deliberate, so a planning number has to come from a source you can open.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-rule" id="sampler">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker">The directory</p>
+        <h2>Pick a state and a core. Read what is cited.</h2>
+        <p>
+          Six clocks have a statute or a regulator-published timeframe. Every other pair resolves to
+          “typical range unknown,” with the regulator desk named on the full page.
+        </p>
+      </div>
+      <ClockSampler />
+    </div>
+  </section>
+
+  <section class="section band-rule" id="proof">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker">Proof</p>
+        <h2>Six clocks, each tied to a public source.</h2>
+        <p>
+          Nothing else in the directory is given a number. California’s three-week figure is an
+          individual MLO endorsement window, kept adjacent to the company license.
+        </p>
+      </div>
+      <div class="proof-grid">
         {
-          LICENSES.map((l) => (
-            <a class="tile" href={`/licenses/${l.slug}/`}>
-              <h3>{l.name}</h3>
-              <p class="meta">{l.core}</p>
+          proof.map(({ clock, state, license, source }) => (
+            <a class="tile" href={`/licenses/${license.slug}/${state.slug}/`}>
+              <p class="meta">
+                {state.name} · {license.shortName}
+                {clock.adjacent ? ' · adjacent' : ''}
+              </p>
+              {clock.days && (
+                <p class="figure proof-figure">
+                  {clock.days}
+                  <span>days</span>
+                </p>
+              )}
+              <h3>{clock.kind === 'statutory' ? 'Statutory clock' : 'Regulator-published'}</h3>
+              <p>{clock.label}</p>
+              <p class="meta" style="margin-top:10px">{source.publisher}</p>
             </a>
           ))
         }
@@ -43,55 +151,131 @@ const pages = STATES.length * LICENSES.length;
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap grid-2">
-      <div class="prose">
-        <h2>What this site is for</h2>
-        <p>
-          Three questions, and only those: how long a filed application can sit, what commonly
-          stops the clock, and whether a real expedite exists. We cite NMLS, CSBS, state statutes,
-          and regulator processing-time pages.
-        </p>
-        <p>
-          We do not invent “fast-track: 21–45 days.” We do not rank vendors. We do not decide who
-          must file, or in which office.
-        </p>
+  <section class="section band-rule" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker">How the desk is used</p>
+        <h2>Read the pair. Then ask for a real calendar.</h2>
       </div>
-      <div class="prose">
-        <h2>What the sisters do</h2>
-        <p>
-          <a href={SITE.sisters.simple.url}>{SITE.sisters.simple.name}</a> covers {SITE.sisters.simple.job}.
-        </p>
-        <p>
-          <a href={SITE.sisters.store.url}>{SITE.sisters.store.name}</a> covers {SITE.sisters.store.job}.
-        </p>
-        <p>
-          Filing work goes to <a href={SITE.cornerstone.url}>{SITE.cornerstone.name}</a>.
-        </p>
+      <ol class="steps">
+        <li>
+          <span class="index-no">01</span>
+          <strong>Open the state and the core.</strong>
+          Collection, consumer lending, money transmitter, or mortgage company — one page per state.
+        </li>
+        <li>
+          <span class="index-no">02</span>
+          <strong>Separate the clock from the wait.</strong>
+          A statutory outer bound, a regulator-published window, or a blank. NMLS stays the filing channel. The state keeps the review clock.
+        </li>
+        <li>
+          <span class="index-no">03</span>
+          <strong>Ask Cornerstone to sequence the file.</strong>
+          The operating partner prepares and files. This directory keeps the citations.
+        </li>
+      </ol>
+      <div class="sister-grid">
+        <a class="tile" href="/licenses/">
+          <p class="meta">This desk</p>
+          <h3>How long</h3>
+          <p>Cited clocks, the delays that stop them, and when an expedite is actually published.</p>
+        </a>
+        <a class="tile" href={SITE.sisters.simple.url}>
+          <p class="meta">{SITE.sisters.simple.name}</p>
+          <h3>Who files, and where</h3>
+          <p>{SITE.sisters.simple.job}.</p>
+        </a>
+        <a class="tile" href={SITE.sisters.store.url}>
+          <p class="meta">{SITE.sisters.store.name}</p>
+          <h3>What it costs</h3>
+          <p>{SITE.sisters.store.job}.</p>
+        </a>
+      </div>
+      <div class="link-row">
+        <a href="/delays/">What delays a file</a>
+        <a href="/expedite/">When an expedite is published</a>
+        <a href="/methodology/">How a figure earns a place</a>
+        <a href="/about/">Who keeps the desk</a>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section band-rule" id="faq">
     <div class="wrap">
-      <h2>Start with the cited delay</h2>
-      <div class="grid-2" style="margin-top:16px">
-        <a class="tile" href="/delays/">
-          <h3>What delays a file</h3>
-          <p class="meta">Incomplete applications, FBI name checks, MU2 gaps, bonds, exams.</p>
-        </a>
-        <a class="tile" href="/expedite/">
-          <h3>When expedite is real</h3>
-          <p class="meta">Most of these licenses have no paid skip-the-line window.</p>
-        </a>
-        <a class="tile" href="/states/">
-          <h3>50-state index</h3>
-          <p class="meta">One page per state, all four cores.</p>
-        </a>
-        <a class="tile" href="/methodology/">
-          <h3>How we mark unknown</h3>
-          <p class="meta">Statutory clock ≠ typical wait. We keep them apart.</p>
-        </a>
+      <div class="section-head">
+        <p class="kicker">FAQ</p>
+        <h2>Before the date goes on a slide.</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>What is a statutory clock?</summary>
+          <p>
+            A statute that tells the agency to approve or deny within a stated number of days after a
+            defined start, usually the date the application is complete. It is an outer bound. Several
+            money-transmitter statutes allow an extension for good cause. Deemed approval — silence
+            counting as a yes — is marked only where the cited section says so. New York’s money-transmitter
+            statute does not.
+          </p>
+        </details>
+        <details>
+          <summary>Why do most state pages leave the typical range blank?</summary>
+          <p>
+            A typical range is printed only when the regulator publishes one. This build has {cited} clocks
+            with a statute or a regulator-published timeframe, accessed {SITE.accessed}. The other
+            state × license pairs stay blank. The method is written out on the <a href="/methodology/">methods</a> page.
+          </p>
+        </details>
+        <details>
+          <summary>Does filing on NMLS start the clock?</summary>
+          <p>
+            NMLS is how many of these company licenses are requested. It does not replace the state
+            review clock. Completeness — documents, fees, attestations, and where required the FBI
+            background-check response — is what starts most of the statutory clocks cited here.
+          </p>
+        </details>
+        <details>
+          <summary>What usually consumes the calendar before a statute starts?</summary>
+          <p>
+            A file the agency has not marked complete. NMLS describes FBI fingerprint results as usually
+            about 48 hours, and name-check processing as up to 90 days. Prints older than 180 days expire.
+            Control-person gaps, a bond in the wrong name, financials that do not match the statute, and
+            an on-site exam are the other delays this desk cites. The list is on <a href="/delays/">delays</a>.
+          </p>
+        </details>
+        <details>
+          <summary>Is California’s three-week figure the company mortgage timeline?</summary>
+          <p>
+            California DRE said, as of 4 May 2026, that new mortgage loan originator endorsement filings
+            were reviewed within three weeks of submission. That is an individual endorsement clock. It is
+            labeled adjacent on the California mortgage page. It is not a published typical time for a
+            company lender or broker license at DFPI.
+          </p>
+        </details>
+        <details>
+          <summary>Is a paid expedite part of these licenses?</summary>
+          <p>
+            For these four cores, the directory does not cite a general, regulator-published paid expedite
+            that shortens company-license review. What moves a date is a complete first filing: the MU1
+            and state checklist, background checks inside the fingerprint window, the bond in the name the
+            checklist uses, and answers to deficiency letters. Detail is on <a href="/expedite/">expedite</a>.
+          </p>
+        </details>
+        <details>
+          <summary>Who prepares the application?</summary>
+          <p>
+            {SITE.cornerstone.name}. FastLicense publishes the clocks. Use
+            <a href={SITE.cornerstone.contact}>Ask Cornerstone</a> for a timeline review of a real file.
+            Keep social-security numbers and full financials on that desk, not in a note to this satellite.
+          </p>
+        </details>
+        <details>
+          <summary>I am reading this from the UK. Are FCA timelines here?</summary>
+          <p>
+            These pages cite United States statutes and United States regulator notices for the four cores.
+            An FCA authorisation timetable is a different desk and is not published here. If the filing is
+            in a U.S. state, read that state’s page, then ask Cornerstone to sequence the file.
+          </p>
+        </details>
       </div>
     </div>
   </section>
