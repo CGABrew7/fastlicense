@@ -1,0 +1,322 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { CLOCKS } from '../../data/clocks';
+import { LICENSES } from '../../data/licenses';
+import { SITE } from '../../data/site';
+import { STATES } from '../../data/states';
+
+const citedClocks = CLOCKS.flatMap((clock) => {
+  const state = STATES.find((s) => s.code === clock.state);
+  const license = LICENSES.find((l) => l.id === clock.license);
+  const label = clock.label.trim();
+  if (!state || !license || !label) return [];
+  return [{ clock, state, license, label }];
+});
+
+const moneyTransmitterClocks = citedClocks.filter(
+  (row) => row.license.id === 'money-transmitter',
+);
+const day120 = moneyTransmitterClocks.find((row) => row.clock.days === 120)?.clock.days;
+
+const lmsDirectory = `${SITE.sisters.simple.url}/directory`;
+const storeCompare = `${SITE.sisters.store.url}/compare`;
+const navigatorUrl = 'https://licensenavigator.ai/';
+const suretyUrl = 'https://suretyresearch.com/';
+---
+
+<Layout
+  title="How long does a business license take | FastLicense"
+  description="A business license clock usually starts when the file is complete, not when you click submit. Read the cited state page."
+>
+  <section class="masthead">
+    <div class="wrap">
+      <p class="crumbs">
+        <a href="/">Home</a> / Guide
+      </p>
+      <p class="kicker">Guide</p>
+      <h1>How long does a business license take?</h1>
+      <p class="lede">
+        There is no single wait for a U.S. business license. Open the live state and license page on
+        FastLicense and read the citation for the license you will file.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <p>
+        The page prints a figure only when a statute or a regulator page publishes one. If a typical
+        range is unpublished, the cell stays blank on purpose.
+      </p>
+      <p>
+        FastLicense and the sister licensing surfaces (
+        <a href={lmsDirectory} target="_blank" rel="noopener">{SITE.sisters.simple.name}</a>,
+        <a href={storeCompare} target="_blank" rel="noopener">{SITE.sisters.store.name}</a>,
+        <a href={navigatorUrl} target="_blank" rel="noopener">Licensing Navigator</a>, and
+        <a href={suretyUrl} target="_blank" rel="noopener">SuretyResearch</a>) sit in the same owner
+        network as <a href={SITE.cornerstone.url} target="_blank" rel="noopener">{SITE.cornerstone.name}</a>.
+        This guide covers the timeline method. The other surfaces cover activity, cost, license type, and bonds.
+      </p>
+
+      <h2>Key takeaways</h2>
+      <ul>
+        <li>Most statutory clocks start when the application is complete, not when you click submit.</li>
+        <li>A statutory deadline is not an average processing time.</li>
+        <li>NMLS is the filing channel on many of these licenses. The state keeps the review clock.</li>
+        <li>
+          FastLicense prints a number only when a statute or regulator page publishes it. A blank means
+          that range is unpublished.
+        </li>
+        <li>Read the state page, then ask Cornerstone if you need the file sequenced on a real calendar.</li>
+      </ul>
+
+      <h2>1. FastLicense</h2>
+      <p>
+        <a href="/">FastLicense</a> is where you read cited clocks for U.S. collection, consumer lending,
+        money transmission, and mortgage company filings.
+      </p>
+      <p>
+        A figure shows up when a statute or a regulator page publishes it. A blank means the typical
+        range is unpublished. Do not read a blank as zero days or as a fast file. The source did not
+        give a range worth repeating.
+      </p>
+      <p>
+        The site publishes a small set of cited clocks. Open the live page for your state and license
+        and keep its label. This list is that set. A clock with no published label stays off the list.
+      </p>
+      {
+        citedClocks.length > 0 ? (
+          <ul>
+            {citedClocks.map(({ clock, state, license, label }) => (
+              <li>
+                <a href={`/licenses/${license.slug}/${state.slug}/`}>
+                  {state.name} {license.shortName}
+                </a>
+                {clock.adjacent ? ' (adjacent product). ' : '. '}
+                {label}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>This build has no cited clock with a published label. The typical range stays blank.</p>
+        )
+      }
+      <p>
+        Every other pair stays unpublished. Start from <a href="/licenses/">license types</a> or the
+        <a href="/states/"> state index</a>, then open the page for the filing you mean. If the cell is
+        blank, leave it blank.
+      </p>
+
+      <h3>Completeness starts the clock</h3>
+      <p>
+        The clock that matters starts when the application is complete. Clicking submit only means the
+        channel took the package.
+      </p>
+      <p>
+        Complete means the statute or the regulator checklist is satisfied. A missing owner disclosure,
+        a bond that is not yet in force, or an open deficiency leaves the file incomplete. The review
+        period often has not started, even after a fee clears.
+      </p>
+      <p>
+        <a href="/methodology/">Methodology</a> states what FastLicense will cite and why a blank stays
+        blank. Read it before you put a number on a launch plan.
+      </p>
+
+      <h3>A deadline is not an average</h3>
+      <p>
+        A statute can require the regulator to act within a set number of days after a complete
+        application. That is a deadline, meaning a duty to act. It is not an average, and it is not
+        approval on the last day.
+      </p>
+      <p>
+        {
+          day120 ? (
+            <>
+              When a money transmitter page cites {day120} days on a complete application statute, keep
+              that label.
+            </>
+          ) : (
+            <>When a money transmitter page cites a complete application statute, keep that label.</>
+          )
+        }{' '}
+        Approval, denial, and a request for more items are different results.
+      </p>
+
+      <h3>NMLS is the channel. The state keeps the clock</h3>
+      <p>
+        Many of these filings move through NMLS. NMLS is the channel for forms and uploads. The state
+        reviews the license and owns the clock.
+      </p>
+      <p>
+        A submitted status does not prove the statutory period has started. Deficiencies, background
+        checks, and surety items can leave the file short of the state's completeness test.
+      </p>
+
+      <h3>What actually burns calendar time</h3>
+      <p>
+        Most lost days happen before the official clock starts. Missing exhibits, an unplaced bond, a
+        control-person issue, or an unanswered deficiency will stall the file. The
+        <a href="/delays/">delays</a> page lists those patterns and does not assign a day count to each.
+      </p>
+      <p>
+        Expedite exists only where the state offers it. See the <a href="/expedite/">expedite</a> page.
+        Nobody can sell a shorter review than the regulator created. Cleaner preparation can still get
+        the file to complete sooner.
+      </p>
+
+      <h2>2. Who needs which license</h2>
+      <p>
+        Match the activity first. A clock for one license does not carry over to a different activity
+        in the same state.
+      </p>
+      <p>
+        <a href={lmsDirectory} target="_blank" rel="noopener">{SITE.sisters.simple.name}</a> is the
+        directory for who needs what. Collection, consumer lending, money transmission, and mortgage
+        company authority are different permissions. A complete file on the wrong license does not start
+        the clock you care about.
+      </p>
+
+      <h2>3. Cost and who can file</h2>
+      <p>
+        Price does not set the state's clock. A missing fee can still block completeness, the same way
+        a missing form can.
+      </p>
+      <p>
+        <a href={storeCompare} target="_blank" rel="noopener">{SITE.sisters.store.name}</a> compares
+        providers and commercial cost. Use it to see who can prepare the file and what the offer covers.
+        It is not a speed ranking. Cited fees, when a source publishes them, belong on the state page.
+      </p>
+
+      <h2>4. Which license type you mean</h2>
+      <p>
+        Say which license you mean before you ask for a timeline. A city general business license does
+        not share a calendar with a state collection, lending, mortgage, or money transmission license.
+      </p>
+      <p>
+        <a href={navigatorUrl} target="_blank" rel="noopener">Licensing Navigator</a> sorts license type
+        when the activity could sit in more than one regime. Come back to FastLicense for the cited
+        clock on the financial license. This guide does not cite city or county clerk calendars.
+      </p>
+
+      <h2>5. When a bond sits in the path</h2>
+      <p>
+        A required bond often has to be in force before the application counts as complete. Until the
+        regulator can see that security, the statutory review clock may not be running.
+      </p>
+      <p>
+        <a href={suretyUrl} target="_blank" rel="noopener">SuretyResearch</a> covers underwriting,
+        indemnity, and the state's bond form. Those steps sit outside the statute's days to act
+        sentence. Do not add a guessed bond interval to a cited deadline. If no page publishes a
+        combined figure, you do not have one.
+      </p>
+
+      <h2>6. Ask Cornerstone to sequence a real file</h2>
+      <p>
+        A cited clock frames the law. It does not build your calendar.
+        <a href={SITE.cornerstone.url} target="_blank" rel="noopener">{SITE.cornerstone.name}</a>
+        sequences a real file once you know the state, the license, and whether a bond is in the path.
+      </p>
+      <p>
+        Cornerstone's published track record is more than 28 years and over 525,000 filings, with
+        99.995% on-time submissions in 2025. On-time submission is filing discipline. It is not
+        state approval inside a statutory window. The regulator still controls review.
+      </p>
+      <p>
+        Keep three dates separate. The day the channel accepts the file. The day the file is complete
+        under the state's test. The day the statute, if FastLicense cites one, says the regulator must act.
+      </p>
+      <p>
+        <a class="btn btn-solid" href={SITE.cornerstone.contact} target="_blank" rel="noopener">Ask Cornerstone</a>
+      </p>
+
+      <h2>FAQ</h2>
+      <div class="faq">
+        <details>
+          <summary>Does the clock start when I click submit?</summary>
+          <p>
+            Usually no. On most of these licenses the statutory period starts when the application is
+            complete. Submit means the channel accepted the package. Check the citation on your state
+            and license page before your team counts days.
+          </p>
+        </details>
+        <details>
+          <summary>Why is the timeline blank for my state?</summary>
+          <p>
+            The blank is intentional. A figure appears only when a statute or regulator page publishes
+            it. Do not copy another state's number. Open the
+            <a href="/licenses/">license</a> and <a href="/states/">state</a> pages and keep the cell
+            that is already there.
+          </p>
+        </details>
+        <details>
+          <summary>Is 120 days the normal wait for a money transmitter license?</summary>
+          <p>
+            No. A deadline on a statute is not a national average and not approval on the last day.
+            {
+              day120 ? (
+                <>
+                  Some money transmitter pages in this directory cite {day120} days after a complete
+                  application. Read the state page that carries that label.
+                </>
+              ) : (
+                <>This directory does not currently cite a 120 day money transmitter clock.</>
+              )
+            }
+          </p>
+          {
+            moneyTransmitterClocks.length > 0 && (
+              <ul>
+                {moneyTransmitterClocks.map(({ state, license, label }) => (
+                  <li>
+                    <a href={`/licenses/${license.slug}/${state.slug}/`}>{state.name}</a>. {label}
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </details>
+        <details>
+          <summary>Does NMLS decide how long approval takes?</summary>
+          <p>
+            No. NMLS is the filing channel for many of these applications. The state keeps the review
+            clock. Channel status and the state's completeness test are separate facts. Track both.
+          </p>
+        </details>
+        <details>
+          <summary>Can I expedite a collection, lending, mortgage, or money transmission file?</summary>
+          <p>
+            Only where that state offers a faster path. Read <a href="/expedite/">expedite</a> with the
+            state page. A firm cannot compress a review the regulator did not create. You can still
+            shorten the time it takes to reach a complete file.
+          </p>
+        </details>
+        <details>
+          <summary>What if a bond has to land before review starts?</summary>
+          <p>
+            Treat the bond as a completeness item. While it is missing, the review clock may not be
+            running. Read <a href={suretyUrl} target="_blank" rel="noopener">SuretyResearch</a> for the
+            bond path, then ask Cornerstone to sequence bond steps with the license clock.
+          </p>
+        </details>
+      </div>
+
+      <h2>Next step</h2>
+      <p>
+        Open the state and license page on <a href="/">FastLicense</a> for the activity you will
+        conduct. Read the cited figure or keep the blank. Use <a href="/methodology/">methodology</a>,
+        <a href="/delays/">delays</a>, and <a href="/expedite/">expedite</a> so your start date is
+        completeness, not the upload click.
+      </p>
+      <p>
+        If you need a working calendar for a real file,
+        <a href={SITE.cornerstone.contact} target="_blank" rel="noopener">ask Cornerstone</a> to
+        sequence it. Bring the state, the license, and whether a bond sits in the path. Still matching
+        activity to permission? Use the
+        <a href={lmsDirectory} target="_blank" rel="noopener">{SITE.sisters.simple.name} directory</a>.
+        Comparing who can file and commercial cost? Use
+        <a href={storeCompare} target="_blank" rel="noopener">{SITE.sisters.store.name}</a>. Unsure of
+        the license type? Use <a href={navigatorUrl} target="_blank" rel="noopener">Licensing Navigator</a>.
+      </p>
+    </div>
+  </section>
+</Layout>

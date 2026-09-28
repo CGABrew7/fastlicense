@@ -72,6 +72,7 @@ export function pathsForSitemap(): string[] {
     "/methodology/",
     "/delays/",
     "/expedite/",
+    "/guides/how-long-does-a-business-license-take/",
     "/licenses/",
     "/states/",
   ];
