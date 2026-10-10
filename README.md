@@ -4,7 +4,7 @@ The **speed / timeline satellite** in the three-site Cornerstone Licensing direc
 
 This repo is the Cornerstone CE / licensing context for FastLicense. It is **not** a marketing publish to [cornerstonelicensing.com](https://cornerstonelicensing.com). Filing work stays on that desk. Do not spend money, change production DNS, or contact regulators from this satellite.
 
-Owner: Jeff Brewer / Hanok. Operating partner: Cornerstone Licensing.
+Owner: Hanok. Operating partner: Cornerstone Licensing.
 
 ## Three-site split
 
