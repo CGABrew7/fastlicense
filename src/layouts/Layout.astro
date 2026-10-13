@@ -1,18 +1,39 @@
 ---
 import '../styles/global.css';
 import { SITE } from '../data/site';
+import { jsonLd } from '../lib/jsonld';
 
 interface Props {
   title: string;
   description?: string;
   canonical?: string;
+  noindex?: boolean;
 }
 
-const { title, description = SITE.description, canonical } = Astro.props;
+const { title, description = SITE.description, canonical, noindex = false } = Astro.props;
 const canonicalUrl = canonical
   ? new URL(canonical, SITE.url).toString()
   : new URL(Astro.url.pathname, SITE.url).toString();
-const indexable = SITE.publicIndex;
+const indexable = SITE.publicIndex && !noindex;
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: SITE.url,
+  logo: new URL('/favicon.svg', SITE.url).toString(),
+  description: SITE.description,
+  parentOrganization: {
+    '@type': 'Organization',
+    name: SITE.cornerstone.name,
+    url: SITE.cornerstone.url,
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'licensing filings',
+    url: SITE.cornerstone.contact,
+    telephone: `+1-${SITE.cornerstone.phone}`,
+  },
+};
 ---
 
 <!DOCTYPE html>
@@ -22,15 +43,9 @@ const indexable = SITE.publicIndex;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="robots" content={indexable ? "index,follow" : "noindex,nofollow"} />
-    {
-      !indexable && (
-        <Fragment
-          set:html={"<!-- Private staging for Cornerstone / Hanok review. noindex,nofollow. Status note is in the footer, not the header. -->"}
-        />
-      )
-    }
     <meta name="theme-color" content="#101820" />
     <link rel="canonical" href={canonicalUrl} />
+    <script type="application/ld+json" is:inline set:html={jsonLd(organization)} />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -52,7 +67,7 @@ const indexable = SITE.publicIndex;
         <a class="brand" href="/">
           <span class="brand-mark">FL</span>
           <span class="brand-name">
-            FastLicense
+            {SITE.name}
             <span>Timeline directory</span>
           </span>
         </a>
@@ -78,7 +93,7 @@ const indexable = SITE.publicIndex;
         <p class="kicker">Filing desk</p>
         <h2>Ask Cornerstone to sequence the filing calendar.</h2>
         <p>
-          FastLicense publishes the clocks it can cite. {SITE.cornerstone.name} prepares and files
+          {SITE.name} publishes the clocks it can cite. {SITE.cornerstone.name} prepares and files
           collection, lending, money transmitter, and mortgage company applications.
         </p>
         <div class="btn-row">
@@ -95,7 +110,7 @@ const indexable = SITE.publicIndex;
           <div>
             <a class="brand" href="/">
               <span class="brand-mark">FL</span>
-              <span class="brand-name">FastLicense<span>Timeline desk</span></span>
+              <span class="brand-name">{SITE.name}<span>Timeline desk</span></span>
             </a>
             <p>
               How long licensing takes, what delays a file, and when an expedite actually exists.
@@ -118,6 +133,7 @@ const indexable = SITE.publicIndex;
             <a href="/expedite/">When to expedite</a>
             <a href="/methodology/">Methods</a>
             <a href="/sitemap.xml">XML sitemap</a>
+            <a href="/llms.txt">llms.txt</a>
           </div>
           <div>
             <h4>House</h4>
@@ -129,15 +145,14 @@ const indexable = SITE.publicIndex;
           </div>
         </div>
         <div class="footer-bottom">
-          <span>&copy; 2026 FastLicense · {SITE.owner}</span>
+          <span>&copy; 2026 {SITE.name} · {SITE.owner}</span>
           <span>Informational only. Not legal advice. Applications are filed by {SITE.cornerstone.name}.</span>
         </div>
         {
           !indexable && (
             <p class="staging-note">
-              Private staging for Cornerstone / Hanok review. Crawlers are set to noindex.
-              This preview is not a public launch of fastlicense.com and not a marketing publish
-              to cornerstonelicensing.com.
+              Private staging for Cornerstone Licensing review. Crawlers are set to noindex.
+              This preview is not a public launch of fastlicence.com.
             </p>
           )
         }

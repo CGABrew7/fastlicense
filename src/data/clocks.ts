@@ -13,7 +13,7 @@ export interface Clock {
   clockStarts: string;
   deemedApproval: boolean;
   extendable: boolean;
-  /** Adjacent product (e.g. individual MLO) — do not treat as this license's typical time. */
+  /** Adjacent product (e.g. individual MLO). Do not treat as this license's typical time. */
   adjacent?: boolean;
   asOf?: string;
   sourceIds: string[];
@@ -21,7 +21,7 @@ export interface Clock {
 
 /**
  * Only clocks we can point at a statute or a regulator-published timeframe.
- * Typical "X–Y weeks" ranges that are not on those pages stay off this list.
+ * Typical "X-Y weeks" ranges that are not on those pages stay off this list.
  */
 export const CLOCKS: Clock[] = [
   {
@@ -84,7 +84,7 @@ export const CLOCKS: Clock[] = [
     summary:
       "Banking Law § 642 says the superintendent shall approve conditionally or deny a money-transmitter application within ninety days from the filing. That period may be extended by the applicant’s written consent. The statute does not treat silence as approval. DFS also states that no application is complete until the department has every required item, document, and fee.",
     days: 90,
-    clockStarts: "filing — but DFS will not treat the file as complete until all required items arrive",
+    clockStarts: "filing, but DFS will not treat the file as complete until all required items arrive",
     deemedApproval: false,
     extendable: true,
     sourceIds: ["ny_bnk_642", "ny_dfs_mt"],

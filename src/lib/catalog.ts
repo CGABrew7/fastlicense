@@ -21,11 +21,11 @@ export function typicalLabel(clocks: Clock[]): { published: boolean; label: stri
   if (ownClocks.length) {
     return {
       published: false,
-      label: "Typical range unknown — statutory clock cited",
+      label: "Typical range unknown: statutory clock cited",
     };
   }
   if (clocks.some((c) => c.adjacent)) {
-    return { published: false, label: "Typical range unknown — adjacent clock cited" };
+    return { published: false, label: "Typical range unknown: adjacent clock cited" };
   }
   return { published: false, label: "Typical range unknown" };
 }

@@ -891,7 +891,7 @@ th {
 }
 
 .faq details[open] summary::after {
-  content: "–";
+  content: "-";
 }
 
 .faq details p {

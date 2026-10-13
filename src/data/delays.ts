@@ -31,7 +31,7 @@ export const DELAYS: DelayFactor[] = [
     id: "financials",
     title: "Financial statements and net-worth proof",
     summary:
-      "Money-transmitter and many lender filings require financials that match the statute. The CSBS model MTMA treats completeness as a facial check that required items — including the FBI response — are present. Substance review of financial condition happens after that, and weak or stale statements produce more questions, not a faster clock.",
+      "Money-transmitter and many lender filings require financials that match the statute. The CSBS model MTMA treats completeness as a facial check that required items, including the FBI response, are present. Substance review of financial condition happens after that, and weak or stale statements produce more questions, not a faster clock.",
     sourceIds: ["csbs_mtma_model", "nmls_checklist"],
   },
   {

@@ -1,9 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import FaqList from '../../components/FaqList.astro';
 import { CLOCKS } from '../../data/clocks';
 import { LICENSES } from '../../data/licenses';
 import { SITE } from '../../data/site';
 import { STATES } from '../../data/states';
+import { guideFaqs } from '../../lib/faqs';
 
 const citedClocks = CLOCKS.flatMap((clock) => {
   const state = STATES.find((s) => s.code === clock.state);
@@ -22,10 +24,16 @@ const lmsDirectory = `${SITE.sisters.simple.url}/directory`;
 const storeCompare = `${SITE.sisters.store.url}/compare`;
 const navigatorUrl = 'https://licensenavigator.ai/';
 const suretyUrl = 'https://suretyresearch.com/';
+
+const faqs = guideFaqs({
+  day120,
+  clocks: moneyTransmitterClocks,
+  suretyUrl,
+});
 ---
 
 <Layout
-  title="How long does a business license take | FastLicense"
+  title="How long does a business license take | FastLicence"
   description="A business license clock usually starts when the file is complete, not when you click submit. Read the cited state page."
 >
   <section class="masthead">
@@ -37,7 +45,7 @@ const suretyUrl = 'https://suretyresearch.com/';
       <h1>How long does a business license take?</h1>
       <p class="lede">
         There is no single wait for a U.S. business license. Open the live state and license page on
-        FastLicense and read the citation for the license you will file.
+        FastLicence and read the citation for the license you will file.
       </p>
     </div>
   </section>
@@ -49,7 +57,7 @@ const suretyUrl = 'https://suretyresearch.com/';
         range is unpublished, the cell stays blank on purpose.
       </p>
       <p>
-        FastLicense and the sister licensing surfaces (
+        FastLicence and the sister licensing surfaces (
         <a href={lmsDirectory} target="_blank" rel="noopener">{SITE.sisters.simple.name}</a>,
         <a href={storeCompare} target="_blank" rel="noopener">{SITE.sisters.store.name}</a>,
         <a href={navigatorUrl} target="_blank" rel="noopener">Licensing Navigator</a>, and
@@ -64,15 +72,15 @@ const suretyUrl = 'https://suretyresearch.com/';
         <li>A statutory deadline is not an average processing time.</li>
         <li>NMLS is the filing channel on many of these licenses. The state keeps the review clock.</li>
         <li>
-          FastLicense prints a number only when a statute or regulator page publishes it. A blank means
+          FastLicence prints a number only when a statute or regulator page publishes it. A blank means
           that range is unpublished.
         </li>
         <li>Read the state page, then ask Cornerstone if you need the file sequenced on a real calendar.</li>
       </ul>
 
-      <h2>1. FastLicense</h2>
+      <h2>1. FastLicence</h2>
       <p>
-        <a href="/">FastLicense</a> is where you read cited clocks for U.S. collection, consumer lending,
+        <a href="/">FastLicence</a> is where you read cited clocks for U.S. collection, consumer lending,
         money transmission, and mortgage company filings.
       </p>
       <p>
@@ -118,7 +126,7 @@ const suretyUrl = 'https://suretyresearch.com/';
         period often has not started, even after a fee clears.
       </p>
       <p>
-        <a href="/methodology/">Methodology</a> states what FastLicense will cite and why a blank stays
+        <a href="/methodology/">Methodology</a> states what FastLicence will cite and why a blank stays
         blank. Read it before you put a number on a launch plan.
       </p>
 
@@ -194,7 +202,7 @@ const suretyUrl = 'https://suretyresearch.com/';
       </p>
       <p>
         <a href={navigatorUrl} target="_blank" rel="noopener">Licensing Navigator</a> sorts license type
-        when the activity could sit in more than one regime. Come back to FastLicense for the cited
+        when the activity could sit in more than one regime. Come back to FastLicence for the cited
         clock on the financial license. This guide does not cite city or county clerk calendars.
       </p>
 
@@ -223,86 +231,18 @@ const suretyUrl = 'https://suretyresearch.com/';
       </p>
       <p>
         Keep three dates separate. The day the channel accepts the file. The day the file is complete
-        under the state's test. The day the statute, if FastLicense cites one, says the regulator must act.
+        under the state's test. The day the statute, if FastLicence cites one, says the regulator must act.
       </p>
       <p>
         <a class="btn btn-solid" href={SITE.cornerstone.contact} target="_blank" rel="noopener">Ask Cornerstone</a>
       </p>
 
       <h2>FAQ</h2>
-      <div class="faq">
-        <details>
-          <summary>Does the clock start when I click submit?</summary>
-          <p>
-            Usually no. On most of these licenses the statutory period starts when the application is
-            complete. Submit means the channel accepted the package. Check the citation on your state
-            and license page before your team counts days.
-          </p>
-        </details>
-        <details>
-          <summary>Why is the timeline blank for my state?</summary>
-          <p>
-            The blank is intentional. A figure appears only when a statute or regulator page publishes
-            it. Do not copy another state's number. Open the
-            <a href="/licenses/">license</a> and <a href="/states/">state</a> pages and keep the cell
-            that is already there.
-          </p>
-        </details>
-        <details>
-          <summary>Is 120 days the normal wait for a money transmitter license?</summary>
-          <p>
-            No. A deadline on a statute is not a national average and not approval on the last day.
-            {
-              day120 ? (
-                <>
-                  Some money transmitter pages in this directory cite {day120} days after a complete
-                  application. Read the state page that carries that label.
-                </>
-              ) : (
-                <>This directory does not currently cite a 120 day money transmitter clock.</>
-              )
-            }
-          </p>
-          {
-            moneyTransmitterClocks.length > 0 && (
-              <ul>
-                {moneyTransmitterClocks.map(({ state, license, label }) => (
-                  <li>
-                    <a href={`/licenses/${license.slug}/${state.slug}/`}>{state.name}</a>. {label}
-                  </li>
-                ))}
-              </ul>
-            )
-          }
-        </details>
-        <details>
-          <summary>Does NMLS decide how long approval takes?</summary>
-          <p>
-            No. NMLS is the filing channel for many of these applications. The state keeps the review
-            clock. Channel status and the state's completeness test are separate facts. Track both.
-          </p>
-        </details>
-        <details>
-          <summary>Can I expedite a collection, lending, mortgage, or money transmission file?</summary>
-          <p>
-            Only where that state offers a faster path. Read <a href="/expedite/">expedite</a> with the
-            state page. A firm cannot compress a review the regulator did not create. You can still
-            shorten the time it takes to reach a complete file.
-          </p>
-        </details>
-        <details>
-          <summary>What if a bond has to land before review starts?</summary>
-          <p>
-            Treat the bond as a completeness item. While it is missing, the review clock may not be
-            running. Read <a href={suretyUrl} target="_blank" rel="noopener">SuretyResearch</a> for the
-            bond path, then ask Cornerstone to sequence bond steps with the license clock.
-          </p>
-        </details>
-      </div>
+      <FaqList items={faqs} />
 
       <h2>Next step</h2>
       <p>
-        Open the state and license page on <a href="/">FastLicense</a> for the activity you will
+        Open the state and license page on <a href="/">FastLicence</a> for the activity you will
         conduct. Read the cited figure or keep the blank. Use <a href="/methodology/">methodology</a>,
         <a href="/delays/">delays</a>, and <a href="/expedite/">expedite</a> so your start date is
         completeness, not the upload click.

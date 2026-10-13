@@ -19,7 +19,7 @@ export const LICENSES: LicenseType[] = [
     core: "Accounts receivable management and third-party collection",
     nmlsFamily: "debt / collection company licenses, where a state manages them on NMLS",
     summary:
-      "State collection-agency and related ARM licenses. This site tracks how long a filed application sits with the regulator — not whether you need the license.",
+      "State collection-agency and related ARM licenses. This site tracks how long a filed application sits with the regulator, not whether you need the license.",
   },
   {
     id: "lending",
@@ -39,7 +39,7 @@ export const LICENSES: LicenseType[] = [
     core: "Money transmission and money services businesses",
     nmlsFamily: "money services / money transmitter company licenses on NMLS",
     summary:
-      "Money transmitter and related MSB company licenses. Several states publish a statutory decision clock that starts only after the file is complete — including FBI background-check results.",
+      "Money transmitter and related MSB company licenses. Several states publish a statutory decision clock that starts only after the file is complete, including FBI background-check results.",
   },
   {
     id: "mortgage",
