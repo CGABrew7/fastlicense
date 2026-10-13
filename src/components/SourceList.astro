@@ -15,7 +15,7 @@ const { sources } = Astro.props;
       sources.map((s) => (
         <li>
           <a href={s.url} target="_blank" rel="noopener">{s.title}</a>
-          <span class="meta"> — {s.publisher}. Accessed {s.accessed}.</span>
+          <span class="meta">, {s.publisher}. Accessed {s.accessed}.</span>
         </li>
       ))
     }

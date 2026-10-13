@@ -113,7 +113,7 @@ const presets = [
       Extendable: {opening.extendable ? 'yes' : 'not stated'}.
     </p>
     <p class="meta sampler-meta">
-      Source: {opening.sources[0].publisher} — {opening.sources[0].title}
+      Source: {opening.sources[0].publisher}, {opening.sources[0].title}
     </p>
     <div class="sampler-actions">
       <a href={initial.page}>Open the full page</a>
@@ -196,7 +196,7 @@ const presets = [
             out,
             'p',
             'meta sampler-meta',
-            `Source: ${clock.sources[0].publisher} — ${clock.sources[0].title}`,
+            `Source: ${clock.sources[0].publisher}, ${clock.sources[0].title}`,
           );
         }
       });

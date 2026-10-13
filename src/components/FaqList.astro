@@ -1,0 +1,39 @@
+---
+import { jsonLd } from '../lib/jsonld';
+
+interface Item {
+  question: string;
+  answerHtml: string;
+  answerText: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answerText,
+    },
+  })),
+};
+---
+
+<div class="faq">
+  {
+    items.map((item) => (
+      <details>
+        <summary>{item.question}</summary>
+        <div set:html={item.answerHtml} />
+      </details>
+    ))
+  }
+</div>
+<script type="application/ld+json" is:inline set:html={jsonLd(schema)} />
