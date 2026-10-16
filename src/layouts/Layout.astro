@@ -13,6 +13,16 @@ const canonicalUrl = canonical
   ? new URL(canonical, SITE.url).toString()
   : new URL(Astro.url.pathname, SITE.url).toString();
 const indexable = SITE.publicIndex;
+const orgJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: SITE.url,
+  logo: `${SITE.url}/favicon.svg`,
+  description: SITE.description,
+  telephone: SITE.phone,
+  parentOrganization: { '@type': 'Organization', name: SITE.cornerstone.name, url: SITE.cornerstone.url },
+});
 ---
 
 <!DOCTYPE html>
@@ -44,6 +54,8 @@ const indexable = SITE.publicIndex;
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
     <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json" set:html={orgJsonLd} />
+    <slot name="head" />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -136,7 +148,7 @@ const indexable = SITE.publicIndex;
           !indexable && (
             <p class="staging-note">
               Private staging for Cornerstone review. Crawlers are set to noindex.
-              This preview is not a public launch of fastlicense.com and not a marketing publish
+              This preview is not a public launch of fastlicence.com and not a marketing publish
               to cornerstonelicensing.com.
             </p>
           )
