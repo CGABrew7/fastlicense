@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://fastlicense.com',
+  site: 'https://fastlicence.com',
   trailingSlash: 'always',
 });
