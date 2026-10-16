@@ -22,15 +22,34 @@ const proof = CLOCKS.map((clock) => {
 ---
 
 <Layout
-  title="FastLicense — Cited timelines for U.S. business licensing"
-  description="Cited statutory clocks and regulator-published waits for U.S. collection, lending, money transmitter, and mortgage company licenses. A typical range stays blank when it is not published."
+  title="FastLicense | License Times in 50 States"
+  description="Free directory of cited statutory clocks and regulator-published processing times for U.S. collection, lending, money transmitter, and mortgage licenses."
 >
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        ["What is a statutory clock?", "A statute that tells the agency to approve or deny within a stated number of days after a defined start, usually the date the application is complete. It is an outer bound. Deemed approval is marked only where the cited section says so."],
+        ["Why do most state pages leave the typical range blank?", "A typical range is printed only when the regulator publishes one. Pairs without a statute or a regulator-published timeframe stay blank."],
+        ["Does filing on NMLS start the clock?", "NMLS is how many of these company licenses are requested. It does not replace the state review clock. Completeness, meaning documents, fees, attestations, and where required the FBI background-check response, starts most of the statutory clocks cited here."],
+        ["Is a paid expedite part of these licenses?", "For these four cores, the directory does not cite a general, regulator-published paid expedite that shortens company-license review. What moves a date is a complete first filing."],
+        ["Who prepares the application?", "Cornerstone Licensing prepares and files applications. FastLicense publishes the clocks and does not take applications."],
+      ].map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+    })} />
+  </Fragment>
   <section class="hero">
     <div class="wrap">
       <div class="hero-grid">
         <div>
           <p class="kicker">Cited U.S. licensing timelines</p>
-          <h1>See the cited clock before you set a launch date.</h1>
+          <h1>License timing directory for operators planning filings</h1>
+          <p class="lede">
+            FastLicense is a free public directory of cited statutory clocks and regulator-published
+            processing times for U.S. collection agency, consumer lending, money transmitter, and mortgage
+            company licenses across 50 states.
+          </p>
+          <p class="lede"><strong>Best for:</strong> operators planning collection, lending, money transmitter, and mortgage license filings and launch dates.</p>
           <p class="lede">
             For operators sequencing collection, consumer lending, money transmission, and mortgage
             company filings. Fifty states. A figure appears when a statute or a regulator page publishes it.
@@ -213,8 +232,8 @@ const proof = CLOCKS.map((clock) => {
           <p>
             A statute that tells the agency to approve or deny within a stated number of days after a
             defined start, usually the date the application is complete. It is an outer bound. Several
-            money-transmitter statutes allow an extension for good cause. Deemed approval — silence
-            counting as a yes — is marked only where the cited section says so. New York’s money-transmitter
+            money-transmitter statutes allow an extension for good cause. Deemed approval, meaning silence
+            counting as a yes, is marked only where the cited section says so. New York’s money-transmitter
             statute does not.
           </p>
         </details>
@@ -230,8 +249,8 @@ const proof = CLOCKS.map((clock) => {
           <summary>Does filing on NMLS start the clock?</summary>
           <p>
             NMLS is how many of these company licenses are requested. It does not replace the state
-            review clock. Completeness — documents, fees, attestations, and where required the FBI
-            background-check response — is what starts most of the statutory clocks cited here.
+            review clock. Completeness (documents, fees, attestations, and where required the FBI
+            background-check response) is what starts most of the statutory clocks cited here.
           </p>
         </details>
         <details>
