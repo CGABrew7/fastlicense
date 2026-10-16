@@ -31,6 +31,6 @@ export const SITE = {
       job: "compare providers and costs",
     },
   },
-  owner: "Hanok / Cornerstone",
+  owner: "Cornerstone Licensing",
   accessed: "2026-08-29",
 } as const;
