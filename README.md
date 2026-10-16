@@ -4,7 +4,7 @@ The **speed / timeline satellite** in the three-site Cornerstone Licensing direc
 
 This repo is the Cornerstone CE / licensing context for FastLicense. It is **not** a marketing publish to [cornerstonelicensing.com](https://cornerstonelicensing.com). Filing work stays on that desk. Do not spend money, change production DNS, or contact regulators from this satellite.
 
-Owner: Jeff Brewer / Hanok. Operating partner: Cornerstone Licensing.
+Operating partner: Cornerstone Licensing.
 
 ## Three-site split
 
@@ -63,7 +63,7 @@ Node 20+ recommended. No environment variables are required.
 
 ## Cloudflare Pages
 
-Already connected as project `fastlicense` (Astro, `npm run build`, output `dist`). Same attach path as the other Hanok satellites. Custom-domain attach and any DNS change are a separate job, not part of private staging.
+Already connected as project `fastlicense` (Astro, `npm run build`, output `dist`). Same attach path as the other satellite sites. Custom-domain attach and any DNS change are a separate job, not part of private staging.
 
 When a public launch is actually approved, flip `SITE.publicIndex` to `true` and drop the `X-Robots-Tag` line in `public/_headers`.
 
