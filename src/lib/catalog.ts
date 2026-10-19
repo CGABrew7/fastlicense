@@ -69,6 +69,7 @@ export function pathsForSitemap(): string[] {
     "/about/",
     "/contact/",
     "/privacy/",
+    "/terms/",
     "/methodology/",
     "/delays/",
     "/expedite/",
