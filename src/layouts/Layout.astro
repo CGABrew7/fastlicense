@@ -43,11 +43,19 @@ const orgJsonLd = JSON.stringify({
     <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/ibm-plex-sans-latin.woff2?v=impeccable-20261021"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/newsreader-latin.woff2?v=impeccable-20261021"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -115,7 +123,7 @@ const orgJsonLd = JSON.stringify({
             </p>
           </div>
           <div>
-            <h4>Directory</h4>
+            <h3 class="footer-label">Directory</h3>
             <a href="/licenses/">License types</a>
             <a href="/licenses/collection/">Collection / ARM</a>
             <a href="/licenses/lending/">Lending</a>
@@ -124,7 +132,7 @@ const orgJsonLd = JSON.stringify({
             <a href="/states/">50 states</a>
           </div>
           <div>
-            <h4>How long</h4>
+            <h3 class="footer-label">How long</h3>
             <a href="/guides/how-long-does-a-business-license-take/">How long a license takes</a>
             <a href="/delays/">What delays filings</a>
             <a href="/expedite/">When to expedite</a>
@@ -132,7 +140,7 @@ const orgJsonLd = JSON.stringify({
             <a href="/sitemap.xml">XML sitemap</a>
           </div>
           <div>
-            <h4>House</h4>
+            <h3 class="footer-label">House</h3>
             <a href="/about/">About</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
