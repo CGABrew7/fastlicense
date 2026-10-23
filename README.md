@@ -59,7 +59,7 @@ npm run build    # writes ./dist
 npm run preview  # serves the build
 ```
 
-Node 20+ recommended. No environment variables are required.
+Node 22.12 or newer is required. No environment variables are required.
 
 ## Cloudflare Pages
 
