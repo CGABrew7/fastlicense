@@ -59,7 +59,7 @@ npm run build    # writes ./dist
 npm run preview  # serves the build
 ```
 
-Node 22.12 or newer is required. No environment variables are required.
+Node.js 22.23.4 or newer is required. `.nvmrc` pins that version for Cloudflare Pages. No environment variables are required.
 
 ## Cloudflare Pages
 
