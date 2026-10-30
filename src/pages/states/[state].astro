@@ -3,6 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import { getStateBySlug, STATES } from '../../data/states';
 import { LICENSES } from '../../data/licenses';
 import { recordFor } from '../../lib/catalog';
+import StatuteHistory from '../../components/StatuteHistory.astro';
+import { statuteHistoryForState } from '../../data/statuteHistory';
 
 export function getStaticPaths() {
   return STATES.map((s) => ({ params: { state: s.slug } }));
@@ -12,6 +14,18 @@ const state = getStateBySlug(Astro.params.state!);
 if (!state) throw new Error('Unknown state');
 
 const rows = LICENSES.map((l) => recordFor(state, l));
+const statuteHistory = statuteHistoryForState(state.code);
+const missingCores = statuteHistory
+  ? LICENSES.filter(
+      (license) => !statuteHistory.groups.some((group) => group.license === license.id),
+    ).map((license) => license.shortName)
+  : [];
+const statutePreamble =
+  missingCores.length === 0
+    ? undefined
+    : missingCores.length === 1
+      ? `No verified statute file for ${missingCores[0]} in this corpus, so that core is not linked.`
+      : `No verified statute file for ${missingCores.join(', ')} in this corpus, so those cores are not linked.`;
 ---
 
 <Layout
@@ -46,4 +60,19 @@ const rows = LICENSES.map((l) => recordFor(state, l));
       }
     </div>
   </section>
+
+  {
+    statuteHistory && (
+      <section class="section">
+        <div class="wrap">
+          <StatuteHistory
+            groups={statuteHistory.groups}
+            textAttribution={statuteHistory.textAttribution}
+            corpusLicenseUrl={statuteHistory.corpusLicenseUrl}
+            preamble={statutePreamble}
+          />
+        </div>
+      </section>
+    )
+  }
 </Layout>

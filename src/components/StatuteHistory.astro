@@ -1,0 +1,54 @@
+---
+import {
+  HISTORY_CC_BY_URL,
+  HISTORY_CREDIT_URL,
+  type StatuteHistoryGroup,
+} from '../data/statuteHistory';
+
+interface Props {
+  groups: StatuteHistoryGroup[];
+  textAttribution: string;
+  corpusLicenseUrl: string;
+  preamble?: string;
+}
+
+const { groups, textAttribution, corpusLicenseUrl, preamble } = Astro.props;
+---
+
+<div class="statute-history">
+  <h2>Statute history</h2>
+  {
+    preamble && <p>{preamble}</p>
+  }
+  <p>
+    History lists each change to the file. Blame names the law that last touched a line.
+    Both open the corpus repository Global Law pins for that file.
+  </p>
+  {
+    groups.map((group) => (
+      <div class="statute-group">
+        {groups.length > 1 && <h3>{group.licenseLabel}</h3>}
+        <ul>
+          {group.links.map((link) => (
+            <li>
+              <p class="statute-label">{link.label}</p>
+              <p>{link.note}</p>
+              <p class="meta statute-path">Global Law path: {link.globalLawPath}</p>
+              <p class="statute-actions">
+                <a href={link.historyUrl} target="_blank" rel="noopener">History</a>
+                <a href={link.blameUrl} target="_blank" rel="noopener">Blame</a>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+  <p class="meta statute-credit">
+    {textAttribution}
+    {' '}
+    Git history by <a href={HISTORY_CREDIT_URL} target="_blank" rel="noopener">Lexifina</a>,
+    <a href={HISTORY_CC_BY_URL} target="_blank" rel="noopener">CC BY 4.0</a>, unchanged.
+    <a href={corpusLicenseUrl} target="_blank" rel="noopener">Corpus license</a>.
+  </p>
+</div>

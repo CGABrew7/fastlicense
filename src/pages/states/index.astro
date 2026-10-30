@@ -1,7 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import StatuteHistory from '../../components/StatuteHistory.astro';
 import { STATES } from '../../data/states';
 import { clocksForState } from '../../data/clocks';
+import { districtStatuteHistory } from '../../data/statuteHistory';
+
+const district = districtStatuteHistory();
 ---
 
 <Layout
@@ -36,4 +40,19 @@ import { clocksForState } from '../../data/clocks';
       }
     </div>
   </section>
+
+  {
+    district && (
+      <section class="section">
+        <div class="wrap">
+          <StatuteHistory
+            groups={district.groups}
+            textAttribution={district.textAttribution}
+            corpusLicenseUrl={district.corpusLicenseUrl}
+            preamble="The District of Columbia has no state page in this directory. The files below are D.C. Code sections verified in the Global Law corpus. No collection agency license file was verified in that corpus, so collection is not linked."
+          />
+        </div>
+      </section>
+    )
+  }
 </Layout>
