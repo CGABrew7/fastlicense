@@ -5,6 +5,8 @@ import { DELAYS } from '../../../data/delays';
 import { getLicenseBySlug, LICENSES } from '../../../data/licenses';
 import { getStateBySlug, STATES } from '../../../data/states';
 import { recordFor } from '../../../lib/catalog';
+import StatuteHistory from '../../../components/StatuteHistory.astro';
+import { statuteHistoryForPair } from '../../../data/statuteHistory';
 
 export function getStaticPaths() {
   return STATES.flatMap((state) =>
@@ -19,6 +21,7 @@ const state = getStateBySlug(Astro.params.state!);
 if (!license || !state) throw new Error('Unknown path');
 
 const record = recordFor(state, license);
+const statuteHistory = statuteHistoryForPair(state.code, license.id);
 ---
 
 <Layout
@@ -65,6 +68,16 @@ const record = recordFor(state, license);
             </p>
           </div>
         ))
+      }
+
+      {
+        statuteHistory && (
+          <StatuteHistory
+            groups={statuteHistory.groups}
+            textAttribution={statuteHistory.textAttribution}
+            corpusLicenseUrl={statuteHistory.corpusLicenseUrl}
+          />
+        )
       }
 
       <h2>Where the file is reviewed</h2>

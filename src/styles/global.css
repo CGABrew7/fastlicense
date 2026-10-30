@@ -624,6 +624,73 @@ h3 {
   max-width: 56ch;
 }
 
+.statute-history {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--ink);
+  padding: 16px 18px;
+  margin: 20px 0 8px;
+  max-width: 100%;
+}
+
+.statute-history h2 {
+  font-size: 1.35rem;
+  margin: 0 0 8px;
+}
+
+.statute-history h3 {
+  font-size: 1.05rem;
+  margin: 14px 0 6px;
+}
+
+.statute-history p,
+.statute-history li {
+  max-width: 62ch;
+}
+
+.statute-history ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+}
+
+.statute-history li {
+  margin: 0 0 14px;
+}
+
+.statute-label {
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.statute-path {
+  overflow-wrap: anywhere;
+}
+
+.statute-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+}
+
+.statute-actions a {
+  font-weight: 600;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.statute-credit {
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+
+.statute-credit a {
+  font-weight: 600;
+}
+
 .table-wrap {
   overflow-x: auto;
   max-width: 100%;

@@ -6,6 +6,8 @@ import { clocksForLicense } from '../../data/clocks';
 import { STATES } from '../../data/states';
 import { recordFor } from '../../lib/catalog';
 import { sourceList } from '../../data/sources';
+import StatuteHistory from '../../components/StatuteHistory.astro';
+import { districtStatuteHistory, USC_TITLES_IN_GLOBAL_LAW } from '../../data/statuteHistory';
 
 export function getStaticPaths() {
   return ['collection', 'lending', 'money-transmitter', 'mortgage'].map((type) => ({
@@ -18,6 +20,12 @@ if (!license) throw new Error('Unknown license');
 
 const clocks = clocksForLicense(license.id);
 const rows = STATES.map((s) => recordFor(s, license));
+const district = districtStatuteHistory(license.id);
+const uscTitles = USC_TITLES_IN_GLOBAL_LAW.join(', ');
+const districtPreamble =
+  license.id === 'mortgage'
+    ? `The SAFE Act source on this page is 12 U.S.C. § 5101 et seq. The United States Code corpus in Global Law covers titles ${uscTitles}. Title 12 has no file in that corpus. The District of Columbia has no separate page in this directory. The D.C. Code file below is the mortgage license section verified in the Global Law corpus.`
+    : 'The District of Columbia has no separate page in this directory. The D.C. Code file below is the section verified for this core in the Global Law corpus.';
 const extraIds =
   license.id === 'money-transmitter'
     ? ['csbs_mtma', 'csbs_mtma_model', 'nmls_checklist']
@@ -105,6 +113,21 @@ const extraIds =
       }
     </div>
   </section>
+
+  {
+    district && (
+      <section class="section">
+        <div class="wrap">
+          <StatuteHistory
+            groups={district.groups}
+            textAttribution={district.textAttribution}
+            corpusLicenseUrl={district.corpusLicenseUrl}
+            preamble={districtPreamble}
+          />
+        </div>
+      </section>
+    )
+  }
 
   <section class="section">
     <div class="wrap">
